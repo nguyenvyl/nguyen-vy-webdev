@@ -10,10 +10,9 @@ app.use(express.static(__dirname + '/public'));
 
 require ("./test/app.js")(app);
 
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
-var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+console.log(process.env);
 
-app.listen(port, ipaddress);
+app.listen(3000);
 
 // app.set('ipaddress', (process.env.IP));
 // app.set('port', (process.env.PORT || 5000));
