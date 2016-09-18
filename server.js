@@ -13,8 +13,8 @@ require ("./test/app.js")(app);
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP;
 var port      = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 
-//app.listen(port, ipaddress);
+app.listen(port, ipaddress);
 
-app.set('ipaddress', (process.env.IP));
-app.set('port', (process.env.PORT || 5000));
-app.listen(app.get('port'), app.get('ipaddress'));
+// app.set('ipaddress', (process.env.IP));
+// app.set('port', (process.env.PORT || 5000));
+// app.listen(app.get('port'), app.get('ipaddress'));
