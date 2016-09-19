@@ -4,15 +4,15 @@ module.exports = function(app)
     app.post("/api/test", createMessage);
     app.delete("/api/test/:id", deleteMessage);
 
-    var connectionString = 'mongodb://nguyenvy:T3$ter@ds033106.mlab.com:33106/nguyenvyl_webdev';
+    var connectionString = 'mongodb://testuser:testuser@ds033106.mlab.com:33106/nguyenvyl_webdev';
 
-    // if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-    //     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-    //         process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-    //         process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-    //         process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-    //         process.env.OPENSHIFT_APP_NAME;
-    // }
+    if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+        connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+            process.env.OPENSHIFT_APP_NAME;
+    }
 
     var mongoose = require("mongoose");
     mongoose.connect(connectionString);
