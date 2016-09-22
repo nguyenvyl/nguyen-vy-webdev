@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57eaa9cd-a2ee-4d71-a2ed-42157a79c9b3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/login.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.elasticbeanstalk/config.yml" afterPath="$PROJECT_DIR$/.elasticbeanstalk/config.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layout.jade" afterPath="$PROJECT_DIR$/views/layout.jade" />
     </list>
     <ignored path="nguyen-vy-webdev.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -315,12 +312,12 @@
       <option name="presentableId" value="Default" />
       <updated>1474275112408</updated>
       <workItem from="1474275114811" duration="2489000" />
-      <workItem from="1474482354899" duration="1705000" />
+      <workItem from="1474482354899" duration="2037000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4194000" />
+    <option name="totallyTimeSpent" value="4526000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="95" y="74" width="1271" height="646" extended-state="0" />
