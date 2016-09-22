@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: webdev-2
+    environment: webdev-env
 global:
   application_name: webdev
   default_ec2_keyname: nguyenvyl
