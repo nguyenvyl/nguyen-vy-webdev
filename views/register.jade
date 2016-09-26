@@ -1,15 +1,10 @@
 extends layout
 
 block content
-    h1 Login
+    h1 Register
     form
         input(id='username',type='text', placeholder='username',name='username')
-        br
         input(id='password',type='password', placeholder='password',name='password')
-    button(type='button') Login
-    br
+        input(id='verifypw',type='verifypw', placeholder='verify password',name='verifypw')
     button(type='button') Register
-
-
-
-
+    button(type='button') Cancel
