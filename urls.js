@@ -5,6 +5,8 @@ var register = require('./routes/register');
 var website = require('./routes/website');
 var profile = require('./routes/profile');
 var pages = require('./routes/pages');
+var widget = require('./routes/widget');
+
 
 
 module.exports = function (app) {
@@ -15,5 +17,6 @@ module.exports = function (app) {
     app.use('/website', website);
     app.use('/profile', profile);
     app.use('/pages', pages);
+    app.use('/widget', widget);
 
 };

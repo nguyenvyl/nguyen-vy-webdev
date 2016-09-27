@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    form
+        div Name
+        input(id='imgName',type='text',name='imgName',class="form control")
+        div Text
+        input(id='imgText',type='text',name='imgText',class="form control")
+        div URL
+        input(id='imgURL',type='url',name='imgURL',class="form control")
+        div Width
+        input(id='imgWidth',type='number',name='imgWidth',class="form control")
+        div Upload
+        input(id='imgUpload',type='file',name='imgUpload', class="form control")
+    button(type='button') Upload Image
+    br
+    button(type='button') Delete
