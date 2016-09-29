@@ -1,10 +1,10 @@
-extends layout
+extends layout_nosticky
 
 block content
     h1 Register
-    form
-        input(id='username',type='text', placeholder='username',name='username')
-        input(id='password',type='password', placeholder='password',name='password')
-        input(id='verifypw',type='verifypw', placeholder='verify password',name='verifypw')
-    button(type='button') Register
-    button(type='button') Cancel
+        form
+            input.form-control(id='username',type='text', placeholder='username',name='username')
+            input.form-control(id='password',type='password', placeholder='password',name='password')
+            input.form-control(id='verifypw',type='verifypw', placeholder='verify password',name='verifypw')
+        button.btn.btn-primary.btn-block(type='button') Register
+        button.btn.btn-danger.btn-block(type='button') Cancel

@@ -1,14 +1,13 @@
-extends layout
-
+extends layout_nosticky
 block content
     h1 Login
     form
-        input(id='username',type='text', placeholder='username',name='username')
+        input.form-control(id='username',type='text', placeholder='username',name='username')
         br
-        input(id='password',type='password', placeholder='password',name='password')
-    button(type='button') Login
+        input.form-control(id='password',type='password', placeholder='password',name='password')
+    button.btn.btn-primary.btn-block(type='button') Login
     br
-    button(type='button') Register
+    button.btn.btn-success.btn-block(type='button') Register
 
 
 

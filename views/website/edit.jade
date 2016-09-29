@@ -1,9 +1,9 @@
-extends ../layout
+extends ../layout_bluesticky
 block content
     form
-        div Name
-        input(id='websiteName',type='text', placeholder = 'The website name', name='websiteName')
-        div Description
-        textarea(id='description',type='description', placeholder = 'The website description',name='description')
+        label(for='websiteName') Name
+        input.form-control(id='websiteName',type='text', placeholder = 'The website name', name='websiteName')
+        label(for='description') Description
+        textarea.form-control(id='description',type='description', placeholder = 'The website description',name='description')
     br
-    button(type='button') Delete
+    button.btn.btn-danger.btn-block(type='button') Delete

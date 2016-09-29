@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    icon= icon
+    link(rel='stylesheet', href='../stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='../stylesheets/style.css')
+  body
+    nav.navbar.navbar-default.navbar-fixed-top #{title}
+
+    div.container-fluid
+      block content
+
+    nav.navbar.navbar-default.navbar-fixed-bottom This is the footer?
+      span(class="glyphicon glyphicon-user")

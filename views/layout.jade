@@ -1,11 +1,24 @@
+extends ../node_modules/jade-bootstrap/_bootstrap
+
 doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='../stylesheets/style.css')
-    //link(rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css")
     link(rel='stylesheet', href='../stylesheets/bootstrap.css')
+    link(rel='stylesheet', href='../stylesheets/style.css')
   body
-    h1 Test header from layout.jade
 
-    block content
+    nav.navbar.navbar-fixed-top
+      div.navbar-header
+        div.navbar-brand #{title}
+
+
+    div.container-fluid
+      block content
+
+    nav.navbar.navbar-fixed-bottom
+      div.nav.navbar-nav.navbar-right
+        div.navbar-header
+          div.navbar-brand
+            +icon("user")
+

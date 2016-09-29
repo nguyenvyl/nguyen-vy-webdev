@@ -2,11 +2,11 @@ extends ../layout
 
 block content
     form 
-        div Name
-        input(id='widgetName',type='text' ,name='widgetName')
-        div Text
-        input(id='widgetText',type='text' ,name='widgetText', placeholder='Autofill heading')
-        div Size
-        input(id='widgetSize',type='number' ,name='widgetSize', placeholder='3')
+        label(for='widgetName') Name
+        input.form-control(id='widgetName',type='text' ,name='widgetName')
+        label(for='widgetText') Text
+        input.form-control(id='widgetText',type='text' ,name='widgetText', placeholder='Autofill heading')
+        label(for='widgetSize') Size
+        input.form-control(id='widgetSize',type='number' ,name='widgetSize', placeholder='3')
     br
-    button(type='button') Delete
+    button.btn.btn-danger.btn-block(type='button') Delete

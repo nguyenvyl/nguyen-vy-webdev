@@ -2,12 +2,12 @@ extends ../layout
 
 block content
     form
-        div Name
-        input(id='imgName',type='text',name='imgName',class="form-control")
-        div Text
-        input(id='imgText',type='text',name='imgText',class="form-control")
-        div URL
-        input(id='imgURL',type='url',name='imgURL',class="form-control")
-        div Width
-        input(id='imgWidth',type='number',name='imgWidth',class="form-control")
-    button(type='button') Delete
+        label(for='ytName') Name
+        input.form-control(id='ytName',type='text',name='ytName')
+        label(for='ytText') Text
+        input.form-control(id='ytText',type='text',name='ytText')
+        label(for='ytURL') URL
+        input.form-control(id='ytURL',type='url',name='ytURL')
+        label(for='ytWidth') Width
+        input.form-control(id='ytWidth',type='number',name='ytWidth')
+    button.btn.btn-danger.btn-block(type='button') Delete

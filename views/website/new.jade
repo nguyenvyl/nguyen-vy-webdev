@@ -1,9 +1,9 @@
-extends ../layout
+extends ../layout_bluesticky
 block content
     form
-        div Name
-        input(id='websiteName',type='text' ,name='websiteName')
-        div Description
-        textarea(id='description',type='description', name='description')
+        label(for='websiteName') Name
+        input(id='websiteName',type='text' ,name='websiteName',class="form-control")
+        label(for='description') Description
+        textarea(id='description',type='description', name='description',class="form-control")
      
 
