@@ -4,36 +4,21 @@ body {
   margin-top: 30px;
 }
 
-a {
-  color: #00B7FF;
+a, a:hover, a:active, a:visited {
+  text-decoration: none;
 }
 
-.sticky {
-  background-color: #F8F8F8;
-  color: #7E7E7E;
-  position: fixed;
-  font-size: x-large;
-  font-weight: bold;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  min-height: 20px;
-  padding: 19px;
+.whiteIcon{
+  color: white;
 }
 
-.stickyFooter {
-  background-color: #F8F8F8;
-  color: #7E7E7E;
-  position: fixed;
-  font-size: x-large;
-  font-weight: bold;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  min-height: 20px;
-  padding: 19px;
+#blueIcon{
+  color: #4286f4;
 }
 
+.grayIcon{
+  color: #777;
+}
 
 .blue{
   background-color: #4286f4;

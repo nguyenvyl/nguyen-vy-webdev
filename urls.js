@@ -1,22 +1,17 @@
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var login = require('./routes/login');
-var register = require('./routes/register');
-var website = require('./routes/website');
-var profile = require('./routes/profile');
 var pages = require('./routes/pages');
 var widget = require('./routes/widget');
+var user = require('./routes/user');
+var website = require('./routes/website');
 
 
 
 module.exports = function (app) {
     app.use('/', routes);
     app.use('/users', users);
-    app.use('/login', login);
-    app.use('/register', register);
-    app.use('/website', website);
-    app.use('/profile', profile);
     app.use('/pages', pages);
     app.use('/widget', widget);
-
+    app.use('/user', user);
+    app.use('/website', website)
 };
