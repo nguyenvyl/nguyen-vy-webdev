@@ -1,26 +1,104 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  margin-top: 30px;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin-top: 30px;
 }
 
-a, a:hover, a:active, a:visited {
-  text-decoration: none;
+h1{
+    padding-bottom: 7px;
+}
+
+a, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+
+a.list-group-item{
+    color: #4286f4;
+}
+
+.btn-block{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+li {
+    list-style-type: none;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-size: large;
+}
+
+input {
+    margin-bottom: 7px;
+}
+
+textarea.form-control{
+    height: 8em;
+}
+
+.delete {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.delete:after {
+    content: '';
+    position:absolute;
+    top:0;
+    right:0;
+    height: 20px;
+    width: 20px;
 }
 
 .whiteIcon{
-  color: white;
+    color: white;
 }
 
-#blueIcon{
-  color: #4286f4;
+.widgetItem{
+    position: relative;
 }
+
+.widgetEdit{
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    right: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    z-index: 2;
+    float: right;
+}
+
+/*.widgetEdit:after {*/
+    /*content: '';*/
+    /*position:absolute;*/
+    /*top:0;*/
+    /*right:0;*/
+    /*height: 20px;*/
+    /*width: 20px;*/
+/*}*/
+
+.widgetIcon{
+    font-size: large;
+    padding: 5px 5px 5px 5px;
+}
+
 
 .grayIcon{
-  color: #777;
+    color: #777;
 }
 
 .blue{
-  background-color: #4286f4;
-  color: white;
+    background-color: #4286f4;
+    color: white;
+}
+
+
+.blueIcon{
+    color: #4286f4;
+}
+
+#blueIcon:hover{
+    color: #23527c;
 }

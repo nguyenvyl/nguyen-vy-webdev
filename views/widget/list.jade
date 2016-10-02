@@ -1,4 +1,41 @@
-extends ../layout
-
+extends ../layout_widget
+block variables
+    - var headIconRight = 'glyphicon glyphicon-plus'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'choose'
+    - var leftIconLink = '../pages/list'
 block content
-
+    div.container-fluid
+        ul
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon(href='heading')
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                h1 An accurate depiction of me this semester
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon(href='image')
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                img.img-responsive(src='https://ithinkincomics.files.wordpress.com/2016/03/post-202-image-15.jpg?w=521&h=698')
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                p K-pop videos are fun. If you want to see a guy do a pretty good dance in the middle of a desert, check out the video below.
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon(href='youtube')
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                div.embed-responsive.embed-responsive-16by9
+                    iframe.embed-responsive-item(src="https://www.youtube.com/embed/Oz3mm3tPKfg" frameborder="0" allowfullscreen)
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                h2 A map to my lifeblood, coffee
+            li.widgetItem
+                span.widgetEdit
+                    a.glyphicon.glyphicon-cog.blueIcon.widgetIcon
+                    a.glyphicon.glyphicon-menu-hamburger.grayIcon.widgetIcon
+                div.embed-responsive.embed-responsive-16by9
+                    iframe.embed-responsive-item(src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4522.757136625808!2d-122.32963191967218!3d47.62132035909528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xe8ff4c1a87da653b!2sEspresso+Vivace!5e0!3m2!1sen!2sus!4v1475363026200"  allowfullscreen>)

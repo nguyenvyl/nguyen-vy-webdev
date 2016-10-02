@@ -1,4 +1,9 @@
 extends ../layout
+block variables
+    - var headIconRight = 'glyphicon glyphicon-ok'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'list'
+    - var leftIconLink = 'list'
 block content
     form
         label(for='pageName') Name
@@ -6,7 +11,7 @@ block content
         label(for='pageTitle') Title
         textarea.form-control(id='pageTitle',type='pageTitle',placeholder='Page Title', name='pageTitle')
         a.btn.btn-danger.btn-block(href='list',type='button') Delete
-        br
+
 
      
 

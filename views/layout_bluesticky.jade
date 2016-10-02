@@ -2,16 +2,16 @@ block variables
 doctype html
 html
   head
-    title= title
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
     link(rel='stylesheet', href='../stylesheets/style.css')
   body
     nav.navbar.navbar-default.navbar-fixed-top.blue
       div.container-fluid
-        div.navbar-brand
+        div.navbar-brand.whiteIcon
           a(href=leftIconLink, class=headIconLeft + ' whiteIcon')
-          | #{title}
-        div.navbar-brand.pull-right
+          | &nbsp
+          b.whiteIcon #{title} &nbsp
+        div.navbar-brand.pull-right.whiteIcon
           a(href=rightIconLink, class=headIconRight + ' whiteIcon')
 
     div.container-fluid

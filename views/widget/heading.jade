@@ -1,5 +1,9 @@
 extends ../layout
-
+block variables
+    - var headIconRight = 'glyphicon glyphicon-ok'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'list'
+    - var leftIconLink = 'list'
 block content
     form 
         label(for='widgetName') Name
@@ -8,5 +12,4 @@ block content
         input.form-control(id='widgetText',type='text' ,name='widgetText', placeholder='Autofill heading')
         label(for='widgetSize') Size
         input.form-control(id='widgetSize',type='number' ,name='widgetSize', placeholder='3')
-    br
-    a.btn.btn-danger.btn-block(href='list',type='button') Delete
+        a.btn.btn-danger.btn-block(href='list',type='button') Delete

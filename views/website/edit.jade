@@ -1,9 +1,13 @@
 extends ../layout_bluesticky
+block variables
+    - var headIconRight = 'glyphicon glyphicon-ok'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'list'
+    - var leftIconLink = 'list'
 block content
     form
         label(for='websiteName') Name
         input.form-control(id='websiteName',type='text', placeholder = 'The website name', name='websiteName')
         label(for='description') Description
         textarea.form-control(id='description',type='description', placeholder = 'The website description',name='description')
-    br
-    a.btn.btn-danger.btn-block(href='list',type='button') Delete
+        a.btn.btn-danger.btn-block(href='list',type='button') Delete

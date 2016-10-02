@@ -1,3 +1,26 @@
 extends ../layout
+block variables
+    - var headIconRight = 'glyphicon glyphicon-plus'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'new'
+    - var leftIconLink = 'list'
 block content
-    p this is pages-list
+    div.list-group
+        div.list-group-item
+            a(href='../widget/list') Here's a page!
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+        div.list-group-item
+            a(href='../widget/list') We'll fill this from Mongo later
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+        div.list-group-item
+            a(href='../widget/list') About Me
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+        div.list-group-item
+            a(href='../widget/list') About You
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+        div.list-group-item
+            a(href='../widget/list') About that guy over there
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+        div.list-group-item
+            a(href='../widget/list') About that girl you secretly have a crush on
+            a.glyphicon.glyphicon-cog.pull-right(href='edit')

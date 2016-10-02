@@ -1,5 +1,9 @@
 extends ../layout
-
+block variables
+    - var headIconRight = 'glyphicon glyphicon-ok'
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    - var rightIconLink = 'list'
+    - var leftIconLink = 'list'
 block content
     form
         label(for='imgName') Name
@@ -12,6 +16,5 @@ block content
         input.form-control(id='imgWidth',type='number',name='imgWidth')
         label(for='imgUpload') Upload
         input.form-control(id='imgUpload',type='file',name='imgUpload', class="form control")
-    a.btn.btn-primary.btn-block(type='button') Upload Image
-    br
-    a.btn.btn-danger.btn-block(href='list',type='button') Delete
+        a.btn.btn-primary.btn-block(type='button') Upload Image
+        a.btn.btn-danger.btn-block(href='list',type='button') Delete

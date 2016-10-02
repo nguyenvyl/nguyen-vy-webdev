@@ -1,14 +1,18 @@
 extends ../layout
-
+block variables
+    //- var headIconRight = ''
+    - var headIconLeft = 'glyphicon glyphicon-chevron-left'
+    //- var rightIconLink = ''
+    - var leftIconLink = 'list'
 block content
-    ul
-        li Header
-        li Label
-        li HTML
-        li Text Input
-        li Link
-        li Button
-        li Image
-        li YouTube
-        li Data Table
-        li Repeater
+    div.list-group
+        a.list-group-item(href='heading') Header
+        a.list-group-item Label
+        a.list-group-item HTML
+        a.list-group-item Text Input
+        a.list-group-item Link
+        a.list-group-item Button
+        a.list-group-item(href='image') Image
+        a.list-group-item(href='youtube') YouTube
+        a.list-group-item Data Table
+        a.list-group-item Repeater
