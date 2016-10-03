@@ -1,23 +1,23 @@
 block variables
 doctype html
 html
-  head
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    link(rel='stylesheet', href='../stylesheets/style.css')
-  body
-    nav.navbar.navbar-default.navbar-fixed-top.blue
-      div.container-fluid
-        div.navbar-brand.whiteIcon
-          a(href=leftIconLink, class=headIconLeft + ' whiteIcon')
-          | &nbsp
-          b.whiteIcon #{title} &nbsp
-        div.navbar-brand.pull-right.whiteIcon
-          a(href=rightIconLink, class=headIconRight + ' whiteIcon')
+    head
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+        link(rel='stylesheet', href='../stylesheets/style.css')
+    body
+        nav.navbar.navbar-default.navbar-fixed-top.blue
+            div.container-fluid
+                div.navbar-brand.whiteIcon
+                    a(href=leftIconLink, class=headIconLeft + ' whiteIcon')
+                    | &nbsp
+                    b.whiteIcon #{title} &nbsp
+                div.navbar-brand.pull-right.whiteIcon
+                    a(href=rightIconLink, class=headIconRight + ' whiteIcon')
 
-    div.container-fluid
-      block content
+        div.container-fluid
+            block content
 
-    nav.navbar.navbar-default.navbar-fixed-bottom.blue
-      div.container-fluid
-        div.navbar-brand.pull-right
-          a(href="/user/profile", class="glyphicon glyphicon-user whiteIcon")
+        nav.navbar.navbar-default.navbar-fixed-bottom.blue
+            div.container-fluid
+                div.navbar-brand.pull-right
+                    a(href="/user/profile", class="glyphicon glyphicon-user whiteIcon")

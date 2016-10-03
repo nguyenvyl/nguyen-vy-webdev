@@ -1,13 +1,39 @@
-extends ../layout_bluesticky
+extends ../layout_bluesticky_responsive
 block variables
     - var headIconRight = 'glyphicon glyphicon-ok'
     - var headIconLeft = 'glyphicon glyphicon-chevron-left'
     - var rightIconLink = 'list'
     - var leftIconLink = 'list'
+    - var hiddenTitle = 'Websites'
 block content
-    form
-        label(for='websiteName') Name
-        input.form-control(id='websiteName',type='text', placeholder = 'The website name', name='websiteName')
-        label(for='description') Description
-        textarea.form-control(id='description',type='description', placeholder = 'The website description',name='description')
-        a.btn.btn-danger.btn-block(href='list',type='button') Delete
+    div.container-fluid
+        div.row
+            div.col-sm-4.hidden-xs
+                div.container-fluid
+                    div.list-group
+                        div.list-group-item
+                            a(href='../pages/list') Placeholder App
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+                        div.list-group-item
+                            a(href='../pages/list') We'll fill this from Mongo later
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+                        div.list-group-item
+                            a(href='../pages/list') ithinkincomics.wordpress.com
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+                        div.list-group-item
+                            a(href='../pages/list') My Blog
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+                        div.list-group-item
+                            a(href='../pages/list') Delicious Food App
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+                        div.list-group-item
+                            a(href='../pages/list') Dog Pics App
+                            a.glyphicon.glyphicon-cog.pull-right(href='edit')
+            div.col-sm-8
+                div.container-fluid
+                    form
+                        label(for='websiteName') Name
+                        input.form-control(id='websiteName',type='text', placeholder = 'The website name', name='websiteName')
+                        label(for='description') Description
+                        textarea.form-control(id='description',type='description', placeholder = 'The website description',name='description')
+                        a.btn.btn-danger.btn-block(href='list',type='button') Delete
