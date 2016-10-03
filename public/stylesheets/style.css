@@ -36,6 +36,15 @@ textarea.form-control{
     height: 8em;
 }
 
+.v-divider{
+    margin-left:5px;
+    margin-right:5px;
+    width:1px;
+    height:100%;
+    border-left:1px solid gray;
+}
+
+
 .footerImage{
     position: fixed;
     left: 50%;
