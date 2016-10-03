@@ -28,6 +28,10 @@ li {
     font-size: large;
 }
 
+.border{
+    border-left: lightgray;
+}
+
 input {
     margin-bottom: 7px;
 }
@@ -70,14 +74,9 @@ textarea.form-control{
     float: right;
 }
 
-/*.widgetEdit:after {*/
-    /*content: '';*/
-    /*position:absolute;*/
-    /*top:0;*/
-    /*right:0;*/
-    /*height: 20px;*/
-    /*width: 20px;*/
-/*}*/
+.hiddenMenu{
+    border-right-color: lightgray;
+}
 
 .widgetIcon{
     font-size: large;
