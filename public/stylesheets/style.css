@@ -37,7 +37,9 @@ textarea.form-control{
 }
 
 .footerImage{
-
+    position: fixed;
+    left: 50%;
+    margin-right: -50%;
 }
 
 .delete {
