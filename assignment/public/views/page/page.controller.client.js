@@ -18,7 +18,6 @@
     }
 
     function NewPageController($routeParams, $location, PageService) {
-        console.log("Newpage controller");
         var vm = this;
         vm.userId = parseInt($routeParams["uid"]);
         vm.websiteId = parseInt($routeParams["wid"]);
@@ -30,7 +29,6 @@
         init();
 
         function createPage(name, title){
-            console.log("Entering create page");
             if(!name || !title){
                 vm.alert = "Please type input for all fields.";
                 return;
@@ -42,7 +40,6 @@
                 }
 
                 var newPage = { _id: pageID, name: name, websiteId: vm.websiteId, title: title};
-                console.log(newPage);
                 PageService.createPage(vm.websiteId, newPage);
                 $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
             }

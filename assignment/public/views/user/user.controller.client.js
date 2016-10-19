@@ -67,7 +67,6 @@
             vm.updateUser = updateUser;
 
             function updateUser(email, firstname, lastname){
-
                 // Check if this username is already taken.
                 if(UserService.findUserByUsername(username)){
                     vm.alert = "Username is already taken.";
