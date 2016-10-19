@@ -124,9 +124,14 @@
         }
 
         function editHEADER(text, size){
-            var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
-            WidgetService.updateWidget(vm.widgetId, update);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+            if(size < 1 || size > 6){
+                vm.alert = "Header size can only be between 1 and 6."
+            }
+            else {
+                var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
+                WidgetService.updateWidget(vm.widgetId, update);
+                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+            }
         }
 
         function editIMAGE(url, width){
