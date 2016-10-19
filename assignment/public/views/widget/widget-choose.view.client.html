@@ -1,0 +1,24 @@
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-brand">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left grayIcon"></a>&nbsp<b>Choose Widget</b></div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="list-group">
+          <a ng-click="model.createWidget(&quot;HEADER&quot;)" class="list-group-item">Header</a>
+          <a class="list-group-item">Label</a>
+          <a  ng-click="model.createWidget(&quot;HTML&quot;)" class="list-group-item">HTML</a>
+          <a class="list-group-item">Text Input</a>
+          <a class="list-group-item">Link</a>
+          <a class="list-group-item">Button</a>
+          <a ng-click="model.createWidget(&quot;IMAGE&quot;)" class="list-group-item">Image</a>
+          <a  ng-click="model.createWidget(&quot;YOUTUBE&quot;)" class="list-group-item">YouTube</a>
+          <a class="list-group-item">Data Table</a>
+          <a class="list-group-item">Repeater</a></div>
+    </div>
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container-fluid">
+        <div class="navbar-brand pull-right"><a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user blueIcon"></a></div>
+      </div>
+    </nav>

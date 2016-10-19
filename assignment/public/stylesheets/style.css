@@ -1,0 +1,125 @@
+body {
+    padding: 50px 0;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin-top: 30px;
+}
+
+h1{
+    padding-bottom: 7px;
+}
+
+a, a:visited, a:hover, a:active {
+    text-decoration: none;
+}
+
+a.list-group-item{
+    color: #4286f4;
+}
+
+.btn-block{
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+li {
+    list-style-type: none;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-size: large;
+}
+
+input {
+    margin-bottom: 7px;
+}
+
+textarea.form-control{
+    height: 8em;
+}
+
+.verticalLine {
+    width:1px;
+    background-color: lightgray;
+    left: 33%;
+    position: absolute;
+    z-index: 5;
+    top:0;
+    bottom: 0;
+}
+
+
+.v-divider{
+    margin-left:5px;
+    margin-right:5px;
+    width:1px;
+    height:100%;
+    border-left:1px solid gray;
+}
+
+
+.footerImage{
+    position: fixed;
+    left: 50%;
+    margin-right: -50%;
+}
+
+.delete {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.delete:after {
+    content: '';
+    position:absolute;
+    top:0;
+    right:0;
+    height: 20px;
+    width: 20px;
+}
+
+.whiteIcon{
+    color: white;
+}
+
+.widgetItem{
+    position: relative;
+}
+
+.widgetEdit{
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    right: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    z-index: 2;
+    float: right;
+}
+
+.hiddenMenu{
+    border-right-color: lightgray;
+}
+
+.widgetIcon{
+    font-size: large;
+    padding: 5px 5px 5px 5px;
+}
+
+
+.grayIcon{
+    color: #777;
+}
+
+.blue{
+    background-color: #4286f4;
+    color: white;
+}
+
+
+.blueIcon{
+    color: #4286f4;
+}
+
+#blueIcon:hover{
+    color: #23527c;
+}

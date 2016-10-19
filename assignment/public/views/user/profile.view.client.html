@@ -1,0 +1,28 @@
+<nav class="navbar navbar-default navbar-fixed-top blue">
+    <div class="container-fluid">
+        <div class="navbar-brand whiteIcon">
+            <b class="whiteIcon">&nbsp Profile</b></div>
+        <div class="navbar-brand pull-right whiteIcon">
+            <a ng-click="model.updateUser(model.user.email, model.user.firstname, model.user.lastname)" type="button" class="glyphicon glyphicon-ok whiteIcon"></a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <form>
+        <label for="username">Username</label>
+        <input ng-model="model.user.username" id="username" type="text" class="form-control" placeholder="Username">
+        <label for="email">Email</label>
+        <input ng-model="model.user.email" id="email" type="email" placeholder="my_email@email.com" class="form-control">
+        <label for="firstname">First Name</label>
+        <input ng-model="model.user.firstName" id="firstname" type="text" placeholder="First Name" class="form-control">
+        <label for="lastname">Last Name</label>
+        <input ng-model="model.user.lastName" id="lastname" type="text" placeholder="Last Name" name="lastname" class="form-control">
+    </form>
+    <a href="#/user/{{model.user._id}}/website" type="button" class="btn btn-primary btn-block">Websites</a>
+    <a href="#/login" type="button" class="btn btn-danger btn-block">Logout</a>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom blue">
+    <div class="container-fluid">
+        <div class="navbar-brand pull-right"><a href="#/user/{{model.userId}}" class="glyphicon glyphicon-user whiteIcon"></a></div>
+    </div>
+</nav>

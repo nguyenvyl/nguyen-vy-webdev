@@ -1,0 +1,72 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-brand">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/" class="glyphicon glyphicon-chevron-left grayIcon"></a>
+            &nbsp<b>Widgets</b>
+        </div>
+        <div class="navbar-brand pull-right">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new" class="glyphicon glyphicon-plus grayIcon"></a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div ng-repeat="widget in model.widgets">
+            <div ng-switch="widget.widgetType">
+                <div ng-switch-when="HEADER">
+                    <div class="widgetItem">
+                        <span class="widgetEdit">
+                            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{widget.pageId}}/widget/{{widget._id}}" class="glyphicon glyphicon-cog blueIcon widgetIcon"></a>
+                            <a class="glyphicon glyphicon-menu-hamburger grayIcon widgetIcon"></a>
+                        </span>
+                        <div ng-switch="widget.size">
+                            <h1 ng-switch-when="1">{{widget.text}}</h1>
+                            <h2 ng-switch-when="2">{{widget.text}}</h2>
+                            <h3 ng-switch-when="3">{{widget.text}}</h3>
+                            <h4 ng-switch-when="4">{{widget.text}}</h4>
+                            <h5 ng-switch-when="5">{{widget.text}}</h5>
+                            <h6 ng-switch-when="6">{{widget.text}}</h6>
+                        </div>
+                    </div>
+                </div>
+                <div ng-switch-when="HTML">
+                    <div class="widgetItem">
+                        <span class="widgetEdit">
+                            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{widget.pageId}}/widget/{{widget._id}}" class="glyphicon glyphicon-cog blueIcon widgetIcon"></a>
+                            <a class="glyphicon glyphicon-menu-hamburger grayIcon widgetIcon"></a>
+                        </span>
+                        <span ng-bind-html="model.trustHTML(widget.text)"></span>
+                    </div>
+                </div>
+                <div ng-switch-when="YOUTUBE">
+                    <div class="widgetItem">
+                        <span class="widgetEdit">
+                                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{widget.pageId}}/widget/{{widget._id}}"
+                                   class="glyphicon glyphicon-cog blueIcon widgetIcon"></a>
+                                <a class="glyphicon glyphicon-menu-hamburger grayIcon widgetIcon"></a>
+                        </span>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe ng-src="{{model.trustURL(model.embedYoutube(widget.url))}}" frameborder="0" allowfullscreen class="embed-responsive-item" width="{{widget.width}}"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div ng-switch-when="IMAGE">
+                    <div class="widgetItem">
+                        <span class="widgetEdit">
+                                <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{widget.pageId}}/widget/{{widget._id}}"
+                                   class="glyphicon glyphicon-cog blueIcon widgetIcon"></a>
+                                <a class="glyphicon glyphicon-menu-hamburger grayIcon widgetIcon"></a>
+                        </span>
+                        <img ng-src="{{widget.url}}" class="img-responsive" width="{{widget.width}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-brand"><a class="glyphicon glyphicon-play grayIcon">&nbsp</a><a class="glyphicon glyphicon-eye-open grayIcon"></a></div>
+        <div class="navbar-brand pull-right"><a href="#/user/{{model.userId}}" id="blueIcon" class="glyphicon glyphicon-user"></a></div>
+    </div>
+</nav>

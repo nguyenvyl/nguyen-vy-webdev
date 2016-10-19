@@ -1,0 +1,20 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-brand">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left grayIcon"></a>
+            &nbsp<b>Edit Widget</b>
+        </div>
+        <div class="navbar-brand pull-right">
+            <a ng-click="model.editHTML(model.widget.text)" class="glyphicon glyphicon-ok grayIcon"></a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+  <form>
+    <label for="widgetText">Text</label>
+    <input ng-model="model.widget.text" id="widgetText" type="text" name="widgetText" placeholder="Your HTML here" class="form-control">
+      <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
+  </form>
+</div>

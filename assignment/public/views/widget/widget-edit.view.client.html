@@ -1,0 +1,19 @@
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-brand"><a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left grayIcon"></a>&nbsp<b>Edit Widget</b></div>
+        <div class="navbar-brand pull-right">
+            <a ng-click="" class="glyphicon glyphicon-ok grayIcon"></a>
+        </div>
+    </div>
+</nav>
+
+<div ng-include="'views/widget/widget-'+model.widget.widgetType+'.view.client.html'"></div>
+
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-brand"><a class="glyphicon glyphicon-play grayIcon">&nbsp</a><a class="glyphicon glyphicon-eye-open grayIcon"></a></div>
+        <div class="navbar-brand pull-right"><a href="#/user/model.userId" id="blueIcon" class="glyphicon glyphicon-user"></a></div>
+    </div>
+</nav>

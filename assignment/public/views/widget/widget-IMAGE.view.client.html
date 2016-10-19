@@ -1,0 +1,30 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-brand">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="glyphicon glyphicon-chevron-left grayIcon"></a>
+            &nbsp<b>Edit Widget</b>
+        </div>
+        <div class="navbar-brand pull-right">
+            <a ng-click="model.editIMAGE(model.widget.url, model.widget.width)" class="glyphicon glyphicon-ok grayIcon"></a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <form>
+        <label for="imgName">Name</label>
+        <input id="imgName" type="text" name="imgName" placeholder="Image Name" class="form-control">
+        <label for="imgText">Text</label>
+        <input id="imgText" type="text" name="imgText" placeholder="Image Text" class="form-control">
+        <label for="imgURL">URL</label>
+        <input ng-model="model.widget.url" id="imgURL" placeholder="Image URL" type="url" name="imgURL" class="form-control">
+        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
+        <label for="imgWidth">Width</label>
+        <input ng-model="model.widget.width" id="imgWidth" placenolder="Image width" type="text" name="imgWidth" class="form-control">
+        <label for="imgUpload">Upload</label>
+        <input id="imgUpload" type="file" name="imgUpload" class="form-control form control">
+        <a type="button" class="btn btn-primary btn-block">Upload Image</a>
+        <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
+    </form>
+</div>
+
