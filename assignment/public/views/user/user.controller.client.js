@@ -67,13 +67,18 @@
             vm.updateUser = updateUser;
 
             function updateUser(email, firstname, lastname){
-                var update = {_id: user._id, username: user.username, password: user.password,
+
+                // Check if this username is already taken.
+                if(UserService.findUserByUsername(username)){
+                    vm.alert = "Username is already taken.";
+                }
+                else{
+                    var update = {_id: user._id, username: user.username, password: user.password,
                         firstName: firstname, lastName: lastname, email: email};
-                UserService.updateUser(user._id, update);
-                $route.reload(true);
+                    UserService.updateUser(user._id, update);
+                    $route.reload(true);
+                }
             }
-
-
         }
 
 })();

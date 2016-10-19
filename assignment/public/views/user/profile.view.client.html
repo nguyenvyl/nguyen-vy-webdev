@@ -9,6 +9,7 @@
 </nav>
 <div class="container-fluid">
     <form>
+        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="username">Username</label>
         <input ng-model="model.user.username" id="username" type="text" class="form-control" placeholder="Username">
         <label for="email">Email</label>
