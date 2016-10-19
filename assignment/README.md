@@ -1,3 +1,0 @@
-<<<<<<< HEAD
-ASSIGNMENT 3
-
