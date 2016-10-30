@@ -54,21 +54,21 @@
         vm.deleteWebsite = deleteWebsite;
 
         function init() {
-            vm.websites = WebsiteService.findWebsiteByUser(vm.userId);
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
+            vm.website = WebsiteService.findWebsiteById(websiteId);
         }
         init();
 
-        function updateWebsite(name, description) {
-            var update = { _id: vm.websiteId, name: name, developerId: vm.userId, description: description};
-            WebsiteService.updateWebsite(vm.websiteId, update);
-            $location.url("/user/" + vm.userId + "/website/");
+        function updateWebsite(website) {
+            WebsiteService.updateWebsite(website);
+            $location.url("/user/"+userId+"/website");
         }
 
-        function deleteWebsite() {
-            WebsiteService.deleteWebsite(vm.websiteId);
-            $location.url("/user/" + vm.userId + "/website/");
+        function deleteWebsite(wid) {
+            WebsiteService.removeWebsite(wid);
+            $location.url("/user/"+userId+"/website");
         }
+
+
     }
 
 })();
