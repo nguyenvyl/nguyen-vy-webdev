@@ -17,7 +17,7 @@
                         <span class="hidden-sm hidden-md hidden-lg">&nbsp</span>
                         <b class="whiteIcon">New Website</b></div>
                     <div class="navbar-brand pull-right whiteIcon">
-                        <a ng-click="model.createWebsite(model.website.name, model.website.description)"  class="glyphicon glyphicon-ok whiteIcon"></a></div>
+                        <a ng-click="model.createWebsite(website)"  class="glyphicon glyphicon-ok whiteIcon"></a></div>
                 </div>
             </div>
         </nav>
@@ -42,9 +42,9 @@
                 <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
                 <form>
                     <label for="websiteName">Name</label>
-                    <input ng-model="model.website.name" id="websiteName" type="text" class="form-control">
+                    <input ng-model="website.name" id="websiteName" type="text" class="form-control">
                     <label for="description">Description</label>
-                    <textarea ng-model="model.website.description" id="description" type="description" name="description" class="form-control"></textarea>
+                    <textarea ng-model="website.description" id="description" type="description" name="description" class="form-control"></textarea>
                 </form>
             </div>
         </div>

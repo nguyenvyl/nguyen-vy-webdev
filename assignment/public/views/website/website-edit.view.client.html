@@ -45,7 +45,7 @@
                     <input ng-model="model.website.name" id="websiteName" type="text" placeholder="The website name" class="form-control">
                     <label for="description">Description</label>
                     <textarea ng-model="model.website.description" id="description" type="text" placeholder="The website description"class="form-control"></textarea>
-                    <a ng-click="model.deleteWebsite(model.websiteId)" href="#/user/{{model.userId}}/website" type="button" class="btn btn-danger btn-block">Delete</a>
+                    <a ng-click="model.deleteWebsite(model.website)" href="#/user/{{model.userId}}/website" type="button" class="btn btn-danger btn-block">Delete</a>
                 </form>
             </div>
         </div>

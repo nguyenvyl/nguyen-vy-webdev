@@ -7,11 +7,16 @@
 
     function WebsiteListController($routeParams, WebsiteService) {
         var vm = this;
-        vm.userId = parseInt($routeParams["uid"]);
+        vm.userId = parseInt($routeParams['uid']);
         function init() {
-            vm.websites = WebsiteService.findWebsiteByUser(vm.userId);
+            var promise = WebsiteService.findAllWebsitesForUser(vm.userId);
+            promise
+                .success(function(websites){
+                    vm.websites = websites;
+                });
         }
         init();
+
     }
 
     function NewWebsiteController($routeParams, $location, WebsiteService) {
@@ -20,29 +25,30 @@
         vm.createWebsite = createWebsite;
 
         function init() {
-            vm.websites = WebsiteService.findWebsiteByUser(vm.userId);
+            var promise = WebsiteService.findAllWebsitesForUser(vm.userId);
+            promise
+                .success(function(websites){
+                    vm.websites = websites;
+                });
         }
         init();
 
-        function createWebsite(name, description){
+        function createWebsite(website){
             console.log("Entering create website");
-            if(!name || !description){
+            console.log(website);
+            if(!website.name || !website.description){
                 vm.alert = "Please type input for all fields.";
                 return;
             }
             else{
-                var siteID = getRandomInt(100, 999);
-                while(WebsiteService.findWebsiteById(siteID)){
-                    siteID = getRandomInt(100, 999);
-                }
-                var newSite = { _id: siteID, name: name, developerId: vm.userId, description: description};
-                WebsiteService.createWebsite(vm.userId, newSite);
-                $location.url("/user/" + vm.userId + "/website/");
+                website._id = (new Date()).getTime();
+                website.developerId = vm.userId;
+                WebsiteService
+                    .createWebsite(vm.userId, website)
+                    .success(function () {
+                        $location.url("/user/" + vm.userId + "/website");
+                    });
             }
-        }
-
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     }
 
@@ -54,18 +60,48 @@
         vm.deleteWebsite = deleteWebsite;
 
         function init() {
-            vm.website = WebsiteService.findWebsiteById(websiteId);
+            var listPromise = WebsiteService.findAllWebsitesForUser(vm.userId);
+            listPromise
+                .success(function(websites){
+                    vm.websites = websites;
+                });
+            var websitePromise = WebsiteService.findWebsiteById(vm.websiteId);
+            websitePromise
+                .success(function(website){
+                    if(website != '0'){
+                        vm.website = website;
+                    }
+                })
+                .error(function(){
+                    console.log("Dawg, your website server service done had an error");
+                });
         }
         init();
 
-        function updateWebsite(website) {
-            WebsiteService.updateWebsite(website);
-            $location.url("/user/"+userId+"/website");
+
+        function updateWebsite() {
+            // console.log("This is update website, controller!");
+            // console.log("The controller is passing in this website:");
+            // console.log(vm.website);
+            var promise = WebsiteService.updateWebsite(vm.website);
+            promise
+                .success(function(){
+                    $location.url("/user/"+ vm.userId +"/website");
+                });
         }
 
-        function deleteWebsite(wid) {
-            WebsiteService.removeWebsite(wid);
-            $location.url("/user/"+userId+"/website");
+        function deleteWebsite(website) {
+
+            console.log("Hello from delete website controller - client");
+            console.log("We received a website with ID " + website._id);
+            WebsiteService
+                .deleteWebsite(website)
+                .success(function(){
+                    $location.url("/user/"+ vm.userId +"/website");
+                })
+                .error(function(){
+                    console.log("We done had some errors dawg");
+                });
         }
 
 
