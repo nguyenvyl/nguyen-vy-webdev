@@ -114,21 +114,20 @@ module.exports = function(app, UserModel) {
     }
 
     function deleteUser(req, res){
-        console.log("Hello from deleteUser - server");
+        // console.log("Hello from deleteUser - server");
         var uid = parseInt(req.params.uid);
-        console.log("We're trying to delete user with ID " + uid);
+        // console.log("We're trying to delete user with ID " + uid);
 
         for(var u in users) {
-            console.log("Checking user " + users[u]._id);
+            // console.log("Checking user " + users[u]._id);
             if(users[u]._id === uid) {
-                console.log("We found em!");
+                // console.log("We found em!");
                 users.splice(u, 1);
-                console.log(users);
+                // console.log(users);
             }
         }
         res.sendStatus(200);
     }
-
 
     app.get('/api/user', findUser);
     app.get('/api/user/:uid/', findUserById);

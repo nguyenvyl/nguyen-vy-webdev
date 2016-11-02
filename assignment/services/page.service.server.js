@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function(app, PageModel) {
-    console.log("Hi! This is your friendly neighborhood website service!");
+    console.log("Hi! This is your friendly neighborhood page service!");
     var pages = [
         {_id: 321, name: "Post 1", websiteId: 456, title: "This is post 1"},
         {_id: 432, name: "Post 2", websiteId: 456, title: "This is post 2"},
@@ -11,7 +11,6 @@ module.exports = function(app, PageModel) {
         {_id: 403, name: "wiki page", websiteId: 432, title: "Wiki page"},
         {_id: 404, name: "another wiki page", websiteId: 432, title: "Some other wiki page"}
     ];
-
 
     function createPage(req, res) {
         console.log("Hi from createPage - server side!");
@@ -52,11 +51,11 @@ module.exports = function(app, PageModel) {
         // console.log("This is update page, server!");
         // console.log("Here's the update we want:");
         var update = req.body;
-        //console.log(update);
+        // console.log(update);
 
-        var pageId= parseInt(req.params.pageId);
+        var pageId = parseInt(req.params.pageId);
        // console.log("The page's id is " + pageId);
-        for(var w in pages) {
+        for(var p in pages) {
             if(pages[p]._id === pageId) {
                 pages[p] = update;
             }
@@ -77,7 +76,6 @@ module.exports = function(app, PageModel) {
         }
         res.sendStatus(200);
     }
-
 
     app.get("/api/website/:websiteId/page", findAllPagesForWebsite);
     app.post("/api/website/:websiteId/page", createPage);

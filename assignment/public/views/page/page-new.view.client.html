@@ -16,7 +16,7 @@
                         <span class="hidden-sm hidden-md hidden-lg">&nbsp</span><b>New Page</b>
                     </div>
                     <div class="navbar-brand pull-right">
-                        <a ng-click="model.createPage(model.page.name, model.page.title)" class="glyphicon glyphicon-ok grayIcon"></a>
+                        <a ng-click="model.createPage(page)" class="glyphicon glyphicon-ok grayIcon"></a>
                     </div>
                 </div>
             </div>
@@ -43,9 +43,9 @@
                 <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
                 <form>
                     <label for="pageName">Name</label>
-                    <input ng-model="model.page.name" id="pageName" type="text" placeholder="Page Name" class="form-control">
+                    <input ng-model="page.name" id="pageName" type="text" placeholder="Page Name" class="form-control">
                     <label for="pageTitle">Title</label>
-                    <textarea ng-model="model.page.title" id="pageTitle" type="text" placeholder="Page Title" class="form-control"></textarea>
+                    <textarea ng-model="page.title" id="pageTitle" type="text" placeholder="Page Title" class="form-control"></textarea>
                 </form>
             </div>
         </div>

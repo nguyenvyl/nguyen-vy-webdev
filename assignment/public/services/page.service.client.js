@@ -26,8 +26,8 @@
 
         }
 
-        function deletePage(page){
-            var url = "/api/page/" + page._id;
+        function deletePage(pageId){
+            var url = "/api/page/" + pageId;
             return $http.delete(url);
         }
         api = {

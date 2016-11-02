@@ -9,9 +9,10 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid">
+
+<div class="container-fluid wam-widgets">
     <div ng-repeat="widget in model.widgets">
-            <div ng-switch="widget.widgetType">
+            <div ng-switch="widget.widgetType" class="wam-sortable">
                 <div ng-switch-when="HEADER">
                     <div class="widgetItem">
                         <span class="widgetEdit">
@@ -70,3 +71,4 @@
         <div class="navbar-brand pull-right"><a href="#/user/{{model.userId}}" id="blueIcon" class="glyphicon glyphicon-user"></a></div>
     </div>
 </nav>
+

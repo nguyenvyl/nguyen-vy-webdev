@@ -7,18 +7,22 @@
 
     function WidgetListController($routeParams, $sce, WidgetService) {
         var vm = this;
-        vm.pageId = parseInt($routeParams["pid"]);
-        vm.websiteId = parseInt($routeParams["wid"]);
-        vm.userId = parseInt($routeParams["uid"]);
+        vm.pageId = parseInt($routeParams.pid);
+        vm.websiteId = parseInt($routeParams.wid);
+        vm.userId = parseInt($routeParams.uid);
         vm.trustHTML = trustHTML;
         vm.trustURL = trustURL;
         vm.embedYoutube = embedYoutube;
 
         function init() {
-            vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
-
+            var listPromise = WidgetService.findAllWidgetsForPage(vm.websiteId);
+            listPromise
+                .success(function(widgets){
+                    vm.widgets = widgets;
+                });
         }
         init();
+
 
         function trustHTML(htmlCode){
             return $sce.trustAsHtml(htmlCode);
@@ -51,16 +55,22 @@
 
     function NewWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
-        vm.userId = parseInt($routeParams["uid"]);
-        vm.websiteId = parseInt($routeParams["wid"]);
-        vm.pageId = parseInt($routeParams["pid"]);
+        vm.userId = parseInt($routeParams.uid);
+        vm.websiteId = parseInt($routeParams.wid);
+        vm.pageId = parseInt($routeParams.pid);
         vm.createWidget = createWidget;
 
+        function init() {
+            var listPromise = WidgetService.findAllWidgetsForPage(vm.websiteId);
+            listPromise
+                .success(function(widgets){
+                    vm.widgets = widgets;
+                });
+        }
+        init();
+
         function createWidget(widgetType) {
-            var widgetId = getRandomInt(100, 999);
-            while(WidgetService.findWidgetById(widgetId)){
-                widgetId = getRandomInt(100, 999);
-            }
+            var widgetId = (new Date()).getTime();
 
             var newWidget;
 
@@ -79,38 +89,49 @@
                         url: ""};
                     break;
             }
-            WidgetService.createWidget(vm.pageId, newWidget);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + widgetId);
-        }
 
-        // To be replaced once Mongo DB is up and running.
-        // For now, used to generate a unique 3-digit ID.
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+            WidgetService
+                .createWidget(vm.pageId, newWidget)
+                .success(function () {
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + widgetId);
+                });
         }
     }
 
     function EditWidgetController($routeParams, $location, WidgetService){
         var vm = this;
-        vm.userId = parseInt($routeParams["uid"]);
-        vm.websiteId = parseInt($routeParams["wid"]);
-        vm.pageId = parseInt($routeParams["pid"]);
+        vm.userId = parseInt($routeParams.uid);
+        vm.websiteId = parseInt($routeParams.wid);
+        vm.pageId = parseInt($routeParams.pid);
         vm.widgetId = parseInt($routeParams["wgid"]);
         vm.editHEADER = editHEADER;
         vm.editHTML = editHTML;
         vm.editIMAGE = editIMAGE;
         vm.editYOUTUBE = editYOUTUBE;
         vm.deleteWidget = deleteWidget;
+
         function init() {
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
+            var widgetPromise = WidgetService.findWidgetById(vm.widgetId);
+            widgetPromise
+                .success(function(widget){
+                    vm.widget = widget;
+                })
+            // var widgets = $(".wam-widgets")
+            //     .sortable({
+            //         axis:'y'
+            //     });
+
         }
         init();
 
         
         function editHTML(text){
             var update = {_id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
-            WidgetService.updateWidget(vm.widgetId, update);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+            WidgetService
+                .updateWidget(vm.widgetId, update)
+                .success(function(widget){
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                })
         }
 
         // This allows changes to a YouTube widget. It also checks for valid input for the width value.
@@ -118,8 +139,11 @@
             var checkWidth = formatWidth(width);
             if(checkWidth){
                 var update = {_id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
-                WidgetService.updateWidget(vm.widgetId, update);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                WidgetService
+                    .updateWidget(vm.widgetId, update)
+                    .success(function(widget){
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                    })
             }
         }
 
@@ -129,8 +153,11 @@
             }
             else {
                 var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
-                WidgetService.updateWidget(vm.widgetId, update);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                WidgetService
+                    .updateWidget(vm.widgetId, update)
+                    .success(function(widget){
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                    })
             }
         }
 
@@ -138,14 +165,22 @@
             var checkWidth = formatWidth(width);
             if(checkWidth){
                 var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
-                WidgetService.updateWidget(vm.widgetId, update);
-                $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                WidgetService
+                    .updateWidget(vm.widgetId, update)
+                    .success(function(widget){
+                        $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                    })
             }
         }
 
+
+
         function deleteWidget(widgetId){
-            WidgetService.deleteWidget(widgetId);
-            $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+            WidgetService
+                .deleteWidget(widgetId)
+                .success(function(widget){
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                })
         }
 
         // Checks if a string is a number between 1 and 100.
