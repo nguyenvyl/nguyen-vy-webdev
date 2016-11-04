@@ -5,7 +5,9 @@
             &nbsp<b>Edit Widget</b>
         </div>
         <div class="navbar-brand pull-right">
-            <a ng-click="model.editIMAGE(model.widget.url, model.widget.width)" class="glyphicon glyphicon-ok grayIcon"></a>
+            <a ng-click=
+                       "model.editIMAGE(model.widget.url, model.widget.width)"
+               class="glyphicon glyphicon-ok grayIcon"></a>
         </div>
     </div>
 </nav>
@@ -13,25 +15,25 @@
 <div class="container-fluid">
     <form>
         <label for="imgName">Name</label>
-        <input id="imgName" type="text" name="imgName" placeholder="Image Name" class="form-control">
+        <input ng-model="model.widget.name" id="imgName" type="text" name="imgName" placeholder="Image Name" class="form-control">
         <label for="imgText">Text</label>
         <input id="imgText" type="text" name="imgText" placeholder="Image Text" class="form-control">
         <label for="imgURL">URL</label>
         <input ng-model="model.widget.url" id="imgURL" placeholder="Image URL" type="url" name="imgURL" class="form-control">
         <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="imgWidth">Width</label>
-        <input ng-model="model.widget.width" id="imgWidth" placenolder="Image width" type="text" name="imgWidth" class="form-control">
-        <!--<label for="imgUpload">Upload</label>-->
-        <!--<input id="imgUpload" type="file" name="imgUpload" class="form-control form control">-->
-        <!--<a type="button" class="btn btn-primary btn-block">Upload Image</a>-->
+        <input ng-model="model.widget.width" id="imgWidth" placeholder="Image width" type="text" name="imgWidth" class="form-control">
     </form>
     <form action="/api/upload"  method="post" enctype="multipart/form-data">
-        <label for="myFile">Upload</label>
-        <input  id="myFile" name="myFile"   type="file" class="form-control"/>
+        <input  name="myFile"   type="file" class="form-control"/>
         <input  name="width"    value="{{model.widget.width}}" style="display: none"/>
         <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+        <input  name="userId" value="{{model.userId}}"   style="display: none"/>
+        <input  name="websiteId" value="{{model.websiteId}}"   style="display: none"/>
+        <input  name="pageId" value="{{model.pageId}}"   style="display: none"/>
         <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
     </form>
+
     <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
 
 </div>

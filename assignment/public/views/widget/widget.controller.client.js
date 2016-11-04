@@ -15,12 +15,27 @@
         vm.embedYoutube = embedYoutube;
 
         function init() {
-            var listPromise = WidgetService.findAllWidgetsForPage(vm.websiteId);
+            var listPromise = WidgetService.findAllWidgetsForPage(vm.pageId);
             listPromise
                 .success(function(widgets){
                     vm.widgets = widgets;
                 });
         }
+
+        function sortItem(start, end) {
+            console.log("start: " + start);
+            console.log("end: " + end);
+
+            var moved = vm.widgets.splice(start, 1)[0];
+            vm.widgets.splice(end, 0, moved);
+
+            var promise = WidgetService.sortItem(vm.widgets);
+            promise
+                .success(function(){
+                    console.log("Widget order has been updated!");
+                });
+        }
+        vm.sortItem = sortItem;
         init();
 
 
@@ -98,7 +113,7 @@
         }
     }
 
-    function EditWidgetController($routeParams, $location, WidgetService){
+    function EditWidgetController($routeParams, $location, $http, WidgetService){
         var vm = this;
         vm.userId = parseInt($routeParams.uid);
         vm.websiteId = parseInt($routeParams.wid);
@@ -109,6 +124,7 @@
         vm.editIMAGE = editIMAGE;
         vm.editYOUTUBE = editYOUTUBE;
         vm.deleteWidget = deleteWidget;
+        vm.uploadImage = uploadImage;
 
         function init() {
             var widgetPromise = WidgetService.findWidgetById(vm.widgetId);
@@ -116,11 +132,6 @@
                 .success(function(widget){
                     vm.widget = widget;
                 })
-            // var widgets = $(".wam-widgets")
-            //     .sortable({
-            //         axis:'y'
-            //     });
-
         }
         init();
 
@@ -161,10 +172,13 @@
             }
         }
 
-        function editIMAGE(url, width){
+        function editIMAGE(url, width, file){
+            console.log("editImage");
+            console.log(file);
+
             var checkWidth = formatWidth(width);
             if(checkWidth){
-                var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
+                var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
                 WidgetService
                     .updateWidget(vm.widgetId, update)
                     .success(function(widget){
@@ -173,7 +187,30 @@
             }
         }
 
+        function uploadImage(file){
+            console.log(file);
+            var uploadUrl = "api/upload";
+            var fd = new FormData();
+            fd.append('file', file);
 
+            $http.post(uploadUrl,fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+                .success(function(){
+                    console.log("success!!");
+                })
+                .error(function(){
+                    console.log("error!!");
+                });
+
+            //
+            // console.log("Calling upload image - controller");
+            // //console.log(file);
+            // console.log("File is ");
+            // console.log(file);
+            // $http.post('/api/upload', file);
+        }
 
         function deleteWidget(widgetId){
             WidgetService

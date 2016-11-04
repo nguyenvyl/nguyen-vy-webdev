@@ -5,10 +5,6 @@
     function WidgetService($http) {
         var api;
 
-        function uploadImage(){
-            return $http.post("/api/upload");
-        }
-
         function createWidget(pageId, widget) {
             var url = "/api/page/" + pageId + "/widget";
             return $http.post(url, widget);
@@ -34,13 +30,21 @@
             var url = "/api/widget/" + widgetId;
             return $http.delete(url);
         }
+
+        function sortItem(widgets){
+            console.log("This is sort item, client!");
+            var url = "/api/sort";
+            console.log(widgets);
+            return $http.put(url, widgets);
+        }
+
         api = {
             createWidget             : createWidget,
             findAllWidgetsForPage    : findAllWidgetsForPage,
             findWidgetById           : findWidgetById,
             updateWidget             : updateWidget,
             deleteWidget             : deleteWidget,
-            uploadImage              : uploadImage
+            sortItem                 : sortItem
         };
         return api;
 

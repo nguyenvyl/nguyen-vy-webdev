@@ -10,9 +10,9 @@
     </div>
 </nav>
 
-<div class="container-fluid wam-widgets">
+<div class="container-fluid" wam-sortable wam-sortable-callback="model.sortItem(start, end)">
     <div ng-repeat="widget in model.widgets">
-            <div ng-switch="widget.widgetType" class="wam-sortable">
+            <div ng-switch="widget.widgetType">
                 <div ng-switch-when="HEADER">
                     <div class="widgetItem">
                         <span class="widgetEdit">

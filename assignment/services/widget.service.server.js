@@ -23,9 +23,23 @@ module.exports = function(app, WidgetModel) {
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../public/uploads' });
     function uploadImage(req, res) {
+        console.log("This is upload image from widget.service.server");
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
         var myFile        = req.file;
+        var userId        = req.body.userId;
+        var websiteId     = req.body.websiteId;
+        var pageId        = req.body.pageId;
+
+
+        console.log("Here's our file: ");
+        console.log(myFile);
+
+        if(!myFile){
+            res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+            return;
+        }
+
         var originalname  = myFile.originalname; // file name on user's computer
         var filename      = myFile.filename;     // new file name in upload folder
         var path          = myFile.path;         // full path of uploaded file
@@ -33,24 +47,36 @@ module.exports = function(app, WidgetModel) {
         var size          = myFile.size;
         var mimetype      = myFile.mimetype;
 
-        res.send(myFile);
+        var extension = originalname.split('.').pop();
+        var relPath = "../uploads/" + filename;
+
+        for(var w in widgets){
+            if(widgets[w]._id == widgetId){
+                widgets[w].url = relPath;
+                widgets[w].width = width;
+                widgets[w].name = originalname;
+                console.log("Here's our updated widget: ");
+                console.log(widgets[w]);
+                res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+                return;
+            }
+        }
+        res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
     }
 
     function createWidget(req, res) {
-        console.log("Hi from createWidget - server side!");
         var widget = req.body;
-        console.log("Here's the widget we're adding: ");
         console.log(widget);
         widgets.push(widget);
         res.send(widget);
     }
 
     function findAllWidgetsForPage(req, res) {
-        console.log("This is find all widgets for user, server!")
-        var uid = req.params.userId;
+        var pid = parseInt(req.params.pageId);
         var result = [];
         for(var w in widgets) {
-            if(widgets[w].developerId == uid) {
+            //console.log(widgets[w].pageId);
+            if(widgets[w].pageId === pid) {
                 result.push(widgets[w]);
             }
         }
@@ -58,28 +84,20 @@ module.exports = function(app, WidgetModel) {
     }
 
     function findWidgetById(req, res){
-        // console.log("This is find widget by ID, server side!");
         var widgetId = parseInt(req.params.widgetId);
 
         var widget = _.find(widgets, function(widget){
             return widget._id === widgetId;
         });
-        // console.log("Here's the widget we found for id " + widgetId);
-        // console.log(widget);
         res.send(widget || '0');
     }
 
     function updateWidget(req, res){
-        // console.log("This is update widget, server!");
-        // console.log("Here's the update we want:");
         var update = req.body;
-        // console.log(update);
-
         var widgetId = parseInt(req.params.widgetId);
-       // console.log("The widget's id is " + widgetId);
-        for(var p in widgets) {
-            if(widgets[p]._id === widgetId) {
-                widgets[p] = update;
+        for(var w in widgets) {
+            if(widgets[w]._id === widgetId) {
+                widgets[w] = update;
             }
         }
         res.sendStatus(200);
@@ -88,23 +106,25 @@ module.exports = function(app, WidgetModel) {
     function deleteWidget(req, res){
         console.log("Hello from deleteWidget - server");
         var widgetId = parseInt(req.params.widgetId);
-        console.log("We're trying to delete widget with ID " + widgetId);
-
-        for(var p in widgets) {
-            if(widgets[p]._id === widgetId) {
-                console.log("We found em!");
-                widgets.splice(p, 1);
+        for(var w in widgets) {
+            if(widgets[w]._id === widgetId) {
+                widgets.splice(w, 1);
             }
         }
         res.sendStatus(200);
     }
 
+    function sortItem(req, res){
+        console.log("This is sort item, client!");
+        var sortedWidgets = req.body;
+        widgets = sortedWidgets;
+        res.send(widgets);
+    }
+    app.put("/api/sort", sortItem);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.put("/api/widget/:widgetId", updateWidget);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.post("/api/upload", upload.single('myFile'), uploadImage);
-
-
 };

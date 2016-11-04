@@ -1,7 +1,51 @@
 (function() {
     angular
         .module("WebAppMaker")
-        .config(Config);
+        .config(Config)
+        .directive('fileModel', ['$parse', function ($parse) {
+            return {
+                restrict: 'A',
+                link: function (scope, element, attrs) {
+                    var model = $parse(attrs.fileModel);
+                    var modelSetter = model.assign;
+
+                    element.bind('change', function () {
+                        scope.$apply(function () {
+                            modelSetter(scope, element[0].files[0]);
+                        });
+                    });
+                }
+            }
+        }])
+        .directive('wamSortable', wamSortable);
+    function wamSortable() {
+        function link(scope, element, attrs) {
+            var start = null;
+            var end   = null;
+            $(element)
+                .sortable({
+                    sort: function(event, ui) {
+                        //ui.helper.find("a").hide();
+                        start = ui.item.index();
+                    },
+                    stop: function(event, ui) {
+                        //ui.item.find("a").show();
+                        end = ui.item.index();
+                        if(start >= end) {
+                            start--;
+                        }
+                        scope.wamSortableCallback({start: start, end: end});
+                    }
+                });
+        }
+        return {
+            scope: {
+                wamSortableCallback: '&'
+            },
+            link: link
+        };
+    }
+
     function Config($routeProvider) {
         $routeProvider
             .when("/home", {
