@@ -8,7 +8,8 @@
     "express": "^4.13.4",
     "lodash": "^4.16.4",
     "mongoose": "^4.4.15",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "q": "^1.4.1"
   },
   "devDependencies": {
     "lodash": "^4.16.4"

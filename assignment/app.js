@@ -74,9 +74,41 @@
 //
 // module.exports = app;
 
-module.exports = function(app) {
-  require("./services/user.service.server.js")(app);
+module.exports = function(app, mongoose, db) {
+
+    var connectionString = 'mongodb://testuser:testuser@ds033106.mlab.com:33106/nguyenvyl_webdev';
+
+    var mongoose = require("mongoose");
+    var db =  mongoose.connect(connectionString);
+    var db_connection = mongoose.connection;
+
+    //test if the connected successfully
+    db_connection.on('connected', function(){
+        console.log("Connected to Mongo DB successfully!");
+    });
+
+    db_connection.on('error', function(){
+        console.log("Mongo DB connection error!");
+    });
+
+    db_connection.on('disconnected', function(){
+        console.log("Mongo DB disconnected!");
+    });
+
+
+  var UserModel = require("./model/user.model.server.js")(mongoose, db);
+  require("./services/user.service.server.js")(app, UserModel);
+  //require("./services/user.service.server.js")(app);
   require("./services/website.service.server.js")(app);
   require("./services/page.service.server.js")(app);
   require("./services/widget.service.server.js")(app);
+
+  // var WebModel = require("./model/website.model.server.js")(mongoose, db);
+  // require("./services/website.service.server.js")(app, WebModel);
+  //
+  // var PageModel =  require("./model/page.model.server.js")(mongoose, db);
+  // require("./services/page.service.server.js")(app, PageModel);
+  //
+  // var WidgetModel =  require("./model/widget.model.server.js")(mongoose, db);
+  // require("./services/page.service.server.js")(app, WidgetModel);
 };
