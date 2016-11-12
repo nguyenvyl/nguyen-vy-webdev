@@ -11,7 +11,7 @@
                 username: username,
                 password: password
             };
-            $http.post('/api/user', newUser);
+            return $http.post('/api/user', newUser);
         }
 
 
@@ -29,9 +29,9 @@
 
         function findUserByCredentials(username, password) {
             console.log("Hello from find user by credentials-- client");
-
             var url = '/api/user?username=' + username + '&password=' + password;
-            console.log($http.get(url));
+            console.log(url);
+
             return $http.get(url);
         }
 

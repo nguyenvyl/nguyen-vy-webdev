@@ -1,5 +1,7 @@
 module.exports = function(app)
 {
+    console.log("Hello from test/app.js");
+
     app.get("/api/test", findAllMessages);
     app.post("/api/test", createMessage);
     app.delete("/api/test/:id", deleteMessage);

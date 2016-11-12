@@ -76,6 +76,8 @@
 
 module.exports = function(app, mongoose, db) {
 
+    console.log("Hello from assignment/app.js");
+
     var connectionString = 'mongodb://testuser:testuser@ds033106.mlab.com:33106/nguyenvyl_webdev';
 
     var mongoose = require("mongoose");
@@ -98,17 +100,13 @@ module.exports = function(app, mongoose, db) {
 
   var UserModel = require("./model/user.model.server.js")(mongoose, db);
   require("./services/user.service.server.js")(app, UserModel);
-  //require("./services/user.service.server.js")(app);
-  require("./services/website.service.server.js")(app);
-  require("./services/page.service.server.js")(app);
-  require("./services/widget.service.server.js")(app);
 
-  // var WebModel = require("./model/website.model.server.js")(mongoose, db);
-  // require("./services/website.service.server.js")(app, WebModel);
-  //
-  // var PageModel =  require("./model/page.model.server.js")(mongoose, db);
-  // require("./services/page.service.server.js")(app, PageModel);
-  //
-  // var WidgetModel =  require("./model/widget.model.server.js")(mongoose, db);
-  // require("./services/page.service.server.js")(app, WidgetModel);
+  var WebsiteModel = require("./model/website.model.server.js")(mongoose, db);
+  require("./services/website.service.server.js")(app, WebsiteModel);
+
+  var PageModel =  require("./model/page.model.server.js")(mongoose, db);
+  require("./services/page.service.server.js")(app, PageModel);
+
+  var WidgetModel =  require("./model/widget.model.server.js")(mongoose, db);
+  require("./services/widget.service.server.js")(app, WidgetModel);
 };

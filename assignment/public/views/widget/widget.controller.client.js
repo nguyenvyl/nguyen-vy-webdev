@@ -7,9 +7,9 @@
 
     function WidgetListController($routeParams, $sce, WidgetService) {
         var vm = this;
-        vm.pageId = parseInt($routeParams.pid);
-        vm.websiteId = parseInt($routeParams.wid);
-        vm.userId = parseInt($routeParams.uid);
+        vm.pageId = $routeParams.pid;
+        vm.websiteId = $routeParams.wid;
+        vm.userId = $routeParams.uid;
         vm.trustHTML = trustHTML;
         vm.trustURL = trustURL;
         vm.embedYoutube = embedYoutube;
@@ -70,9 +70,9 @@
 
     function NewWidgetController($routeParams, $location, WidgetService) {
         var vm = this;
-        vm.userId = parseInt($routeParams.uid);
-        vm.websiteId = parseInt($routeParams.wid);
-        vm.pageId = parseInt($routeParams.pid);
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
         vm.createWidget = createWidget;
 
         function init() {
@@ -85,8 +85,6 @@
         init();
 
         function createWidget(widgetType) {
-            var widgetId = (new Date()).getTime();
-
             var newWidget;
 
             switch(widgetType) {
@@ -115,10 +113,10 @@
 
     function EditWidgetController($routeParams, $location, $http, WidgetService){
         var vm = this;
-        vm.userId = parseInt($routeParams.uid);
-        vm.websiteId = parseInt($routeParams.wid);
-        vm.pageId = parseInt($routeParams.pid);
-        vm.widgetId = parseInt($routeParams["wgid"]);
+        vm.userId = $routeParams.uid;
+        vm.websiteId = $routeParams.wid;
+        vm.pageId = $routeParams.pid;
+        vm.widgetId = $routeParams.wgid;
         vm.editHEADER = editHEADER;
         vm.editHTML = editHTML;
         vm.editIMAGE = editIMAGE;
@@ -204,12 +202,6 @@
                     console.log("error!!");
                 });
 
-            //
-            // console.log("Calling upload image - controller");
-            // //console.log(file);
-            // console.log("File is ");
-            // console.log(file);
-            // $http.post('/api/upload', file);
         }
 
         function deleteWidget(widgetId){

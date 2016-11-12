@@ -8,26 +8,7 @@ module.exports=function(mongoose, db){
 
     var userSchema = require("./user.schema.server.js")(mongoose);
     var userModel = mongoose.model("userModel", userSchema);
-
-    //var userModel = require("./user.schema.server.js")(mongoose);
-
     var api;
-
-
-    //CRUD
-    //user sample: "_id": "123", "username": "alice",    "password": "alice",    "firstName": "Alice",  "lastName": "Wonder"
-    //function createUser(user)
-     // {
-     // var newUser = {
-     // _id: Guid.create(),
-     // username : user.username,
-     // password : user.password,
-     // firstName : user.firstName,
-     // lastName : user.lastName
-     // };
-     // users.push(newUser);
-     // return newUser;
-     // }
 
     //insert user into mongodb using q
     function createUser (user) {
@@ -59,73 +40,45 @@ module.exports=function(mongoose, db){
         return deferred.promise;
     }
 
-    function findUserById(id)
-    {
-        /* var user = null;
-         for (var i = 0; i < users.length; i++) {
-         if (users[i]._id == id) {
-         user = users[i];
-         break;
-         }
-         }
-         return user;*/
-        //return users;
+    function findUserById(id) {
+        console.log("findUserById - user.model.server.js");
+        console.log("We're looking for ID: " + id);
+
         var deferred = q.defer();
 
         userModel.findById(id, function(err, retVal){
             if (err) {
+                console.log("User not found!");
                 deferred.reject(err);
             }
             else{
+                console.log("User found!");
                 deferred.resolve(retVal);
             }
         });
         return deferred.promise;
     }
 
-    function updateUserById(id, user)
+    function updateUser(id, user)
     {
-        /*var user = null;
-         for (var i = 0; i < users.length; i++) {
-         if (users[i]._id == id) {
-         console.log("found this id");
-         users[i] = {
-         _id: id,
-         username: user.username,
-         password: user.password,
-         firstName : user.firstName,
-         lastName : user.lastName,
-         };
-         user = users[i];
-         break;
-         }
-         }
-         return user;*/
-
+        console.log("updateUser - user.model.server.js");
         var deferred = q.defer();
 
         userModel.update({_id: id},{$set: user}, function(err, retVal){
         if (err) {
+            console.log("User not able to be updated!");
             deferred.reject(err);
         }
         else{
+            console.log("User updated!");
             deferred.resolve(retVal);
         }
     });
+        console.log(deferred.promise);
         return deferred.promise;
-
     }
 
-    function deleteUserById(id)
-    {
-        /*for (var i = 0; i < users.length; i++) {
-         if (users[i]._id == id) {
-         users.splice(i, 1);
-         }
-         }
-         return users;*/
-
-
+    function deleteUser(id){
         var deferred = q.defer();
 
         userModel.remove({_id: id}, function(err, retVal){
@@ -136,19 +89,11 @@ module.exports=function(mongoose, db){
                 deferred.resolve(retVal);
             }
         });
-        return deferred.promise;    }
+        return deferred.promise;
+    }
 
     function findUserByUsername(username)
     {
-        /*var user = null;
-         for (var i = 0; i < users.length; i++) {
-         if (users[i].username == username) {
-         user = users[i];
-         break;
-         }
-         }
-         return user;*/
-
         var deferred = q.defer();
 
         userModel.findOne({username: username}, function(err, retVal){
@@ -164,13 +109,9 @@ module.exports=function(mongoose, db){
 
     function findUserByCredentials(credentials)
     {
-        /*var user = null;
-         for (var i = 0; i < users.length; i++) {
-         if (users[i].username == credentials.username && users[i].password == credentials.password) {
-         user = users[i];
-         }
-         }
-         return user;*/
+        console.log("Find user by credentials - user.model.server.js");
+        console.log("We're searching for this user:");
+        console.log(credentials);
         var deferred = q.defer();
 
         userModel.findOne(
@@ -179,9 +120,11 @@ module.exports=function(mongoose, db){
                 password: credentials.password
             }, function(err, retVal){
                 if (err) {
+                    console.log("Whoops we done had an error");
                     deferred.reject(err);
                 }
                 else{
+                    console.log(retVal);
                     deferred.resolve(retVal);
                 }
             });
@@ -192,8 +135,8 @@ module.exports=function(mongoose, db){
         createUser: createUser,
         findAllUsers: findAllUsers,
         findUserById: findUserById,
-        updateUserById: updateUserById,
-        deleteUserById: deleteUserById,
+        updateUser: updateUser,
+        deleteUser: deleteUser,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials
     };

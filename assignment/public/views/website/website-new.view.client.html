@@ -30,8 +30,8 @@
                 <div class="list-group">
                     <div ng-repeat="website in model.websites">
                         <div class="list-group-item">
-                            <a href="#/user/{{website.developerId}}/website/{{website._id}}/page">{{website.name}}</a>
-                            <a href="#/user/{{website.developerId}}/website/{{website._id}}" class="glyphicon glyphicon-cog pull-right"></a>
+                            <a href="#/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+                            <a href="#/user/{{model.userId}}/website/{{website._id}}" class="glyphicon glyphicon-cog pull-right"></a>
                         </div>
                     </div>
                 </div>

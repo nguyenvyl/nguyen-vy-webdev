@@ -7,7 +7,7 @@
 
     function WebsiteListController($routeParams, WebsiteService) {
         var vm = this;
-        vm.userId = parseInt($routeParams['uid']);
+        vm.userId = $routeParams.uid;
         function init() {
             var promise = WebsiteService.findAllWebsitesForUser(vm.userId);
             promise
@@ -21,7 +21,7 @@
 
     function NewWebsiteController($routeParams, $location, WebsiteService) {
         var vm = this;
-        vm.userId = parseInt($routeParams.uid);
+        vm.userId = $routeParams.uid;
         vm.createWebsite = createWebsite;
 
         function init() {
@@ -34,15 +34,16 @@
         init();
 
         function createWebsite(website){
-            console.log("Entering create website");
+            console.log("Entering create website - website.controller.client.js");
+            console.log("We're creating a website for this user: " + vm.userId);
             console.log(website);
             if(!website.name || !website.description){
                 vm.alert = "Please type input for all fields.";
                 return;
             }
             else{
-                website._id = (new Date()).getTime();
-                website.developerId = vm.userId;
+                //website._id = (new Date()).getTime();
+                //website.developerId = vm.userId;
                 WebsiteService
                     .createWebsite(vm.userId, website)
                     .success(function () {
@@ -54,8 +55,8 @@
 
     function EditWebsiteController($routeParams, $location, $route, WebsiteService) {
         var vm = this;
-        vm.websiteId = parseInt($routeParams.wid);
-        vm.userId = parseInt($routeParams.uid);
+        vm.websiteId = $routeParams.wid;
+        vm.userId = $routeParams.uid;
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 

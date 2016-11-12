@@ -2,7 +2,7 @@ module.exports=function(mongoose){
 
     var pageSchema = require("./page.schema.server.js")(mongoose);
 
-    var webSchema = mongoose.Schema({
+    var websiteSchema = mongoose.Schema({
         _user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
@@ -12,7 +12,5 @@ module.exports=function(mongoose){
         pages: [pageSchema],
         dateCreated: {type: Date, default: Date.now}
     });
-
-    //return mongoose.model("Website", webSchema);
-    return webSchema;
+    return websiteSchema;
 };

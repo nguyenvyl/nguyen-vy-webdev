@@ -14,8 +14,8 @@
             var promise = UserService.findUserByCredentials(username, password);
             promise
                 .success(function(user){
-                    if(user == '0'){
-                        vm.alert = "No such user";
+                    if(user == null){
+                        vm.alert = "No such user. To register, hit the Register button below!";
                     }
                     else{
                         $location.url("/user/" + user._id);
@@ -30,6 +30,9 @@
 
 
     function RegisterController($location, UserService) {
+        console.log("Hello from Register Controller!");
+        console.log("This is the user service: ");
+        console.log(UserService);
         var vm = this;
         vm.register = register;
 
@@ -46,19 +49,20 @@
 
             UserService
                 .createUser(username, password1)
-                .then(function(user){
+                .success(function(user){
+                    console.log("Hey this is the user controller, and this user was created!");
+                    console.log(user);
                     $location.url("/user/" + user._id);
                 })
                 .error(function(){
                     console.log("Server error!");
                 })
-
         }
     }
 
     function ProfileController($location, $routeParams, $route, UserService) {
         var vm = this;
-        var userId = parseInt($routeParams.uid);
+        var userId = $routeParams.uid;
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
 
