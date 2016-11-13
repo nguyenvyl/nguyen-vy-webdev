@@ -12,9 +12,23 @@
 </nav>
 
 <div class="container-fluid">
-  <form>
-    <label for="widgetText">Text</label>
-    <input ng-model="model.widget.text" id="widgetText" type="text" name="widgetText" placeholder="Your HTML here" class="form-control">
-      <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
-  </form>
+    <div ng-model="model.widget.text"
+         text-angular
+         ta-toolbar="[
+                      ['h1','h2','h3'],
+                      ['bold','italics','underline','strikeThrough'],
+                      ['ul','ol'],
+                      ['justifyLeft','justifyCenter','justifyRight','justifyFull'],
+                      ['indent','outdent'],
+                      ['html']
+                      ]">
+    </div>
+    <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
 </div>
+
+
+  <!--<form>-->
+    <!--<label for="widgetText">Text</label>-->
+    <!--<input ng-model="model.widget.text" id="widgetText" type="text" name="widgetText" placeholder="Your HTML here" class="form-control">-->
+  <!--</form>-->
+

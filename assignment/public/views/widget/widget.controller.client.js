@@ -89,24 +89,26 @@
 
             switch(widgetType) {
                 case "HEADER":
-                    newWidget = { _id: widgetId, widgetType: "HEADER", pageId: vm.pageId, size: 1, text: ""};
+                    newWidget = { widgetType: "HEADER", size: 1, text: ""};
                     break;
                 case "HTML":
-                    newWidget = { _id: widgetId, widgetType: "HTML", pageId: vm.pageId, text: ""};
+                    newWidget = {widgetType: "HTML", text: ""};
                     break;
                 case "YOUTUBE":
-                    newWidget = { _id: widgetId, widgetType: "YOUTUBE", pageId: vm.pageId, width:"100%", url:""};
+                    newWidget = {widgetType: "YOUTUBE", width:"100%", url:""};
                     break;
                 case "IMAGE":
-                    newWidget = { _id: widgetId, widgetType: "IMAGE", pageId: vm.pageId, width: "100%",
-                        url: ""};
+                    newWidget = {widgetType: "IMAGE", width: "100%", url: ""};
+                    break;
+                case "TEXT":
+                    newWidget = {widgetType: "TEXT", rows: 1, placeholder: "", formatted: true }
                     break;
             }
 
             WidgetService
                 .createWidget(vm.pageId, newWidget)
-                .success(function () {
-                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + widgetId);
+                .success(function (retVal) {
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/" + retVal._id);
                 });
         }
     }
@@ -135,7 +137,7 @@
 
         
         function editHTML(text){
-            var update = {_id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
+            var update = {widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
             WidgetService
                 .updateWidget(vm.widgetId, update)
                 .success(function(widget){
@@ -147,7 +149,7 @@
         function editYOUTUBE(url, width) {
             var checkWidth = formatWidth(width);
             if(checkWidth){
-                var update = {_id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
+                var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
                 WidgetService
                     .updateWidget(vm.widgetId, update)
                     .success(function(widget){
@@ -161,7 +163,7 @@
                 vm.alert = "Header size can only be between 1 and 6."
             }
             else {
-                var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
+                var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
                 WidgetService
                     .updateWidget(vm.widgetId, update)
                     .success(function(widget){
@@ -176,7 +178,7 @@
 
             var checkWidth = formatWidth(width);
             if(checkWidth){
-                var update = { _id: vm.widgetId, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
+                var update = {name: vm.widget.name,  widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
                 WidgetService
                     .updateWidget(vm.widgetId, update)
                     .success(function(widget){

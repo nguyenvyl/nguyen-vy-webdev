@@ -2,39 +2,20 @@ var _ = require('lodash');
 
 module.exports = function(app, WidgetModel) {
     console.log("Hi! This is your friendly neighborhood widget service!");
-    var widgets = [
-            { _id: 123, widgetType: "HEADER", pageId: 321, size: 2, text: "GIZMODO"},
-            { _id: 234, widgetType: "HEADER", pageId: 321, size: 4, text: "Lorem ipsum"},
-            { _id: 345, widgetType: "IMAGE", pageId: 321, width: "100%",
-                url: "http://lorempixel.com/400/200/"},
-            { _id: 456, widgetType: "HTML", pageId: 321, text: "<p>Lorem ipsum</p>"},
-            { _id: 567, widgetType: "HEADER", pageId: 321, size: 4, text: "Lorem ipsum"},
-            { _id: 678, widgetType: "YOUTUBE", pageId: 321, width: "100%",
-                url: "https://youtu.be/AM2Ivdi9c4E" },
-            { _id: 789, widgetType: "HTML", pageId: 321, text: "<p>Lorem ipsum</p>"},
-            { _id: 777, widgetType: "HTML", pageId: 343, text: "<p>Vy's test html paragraph</p>"},
-            { _id: 778, widgetType: "HEADER", pageId: 343, size: 4, text: "Vy's test header"},
-            { _id: 779, widgetType: "YOUTUBE", pageId: 343, width:"100%", url:"https://youtu.be/Wsx9f8tdifw"},
-            { _id: 222, widgetType: "IMAGE", pageId: 343, width: "100%",
-                url: "https://ithinkincomics.files.wordpress.com/2016/03/post-202-image-1.jpg?w=502&h=648"},
-        ];
-
 
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../public/uploads' });
+
     function uploadImage(req, res) {
         console.log("This is upload image from widget.service.server");
+        var widget        = req.body;
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
         var myFile        = req.file;
         var userId        = req.body.userId;
         var websiteId     = req.body.websiteId;
         var pageId        = req.body.pageId;
-
-
-        console.log("Here's our file: ");
-        console.log(myFile);
-
+        
         if(!myFile){
             res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
             return;
@@ -50,68 +31,87 @@ module.exports = function(app, WidgetModel) {
         var extension = originalname.split('.').pop();
         var relPath = "../uploads/" + filename;
 
-        for(var w in widgets){
-            if(widgets[w]._id == widgetId){
-                widgets[w].url = relPath;
-                widgets[w].width = width;
-                widgets[w].name = originalname;
-                console.log("Here's our updated widget: ");
-                console.log(widgets[w]);
-                res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
-                return;
-            }
-        }
+        widget.url = relPath;
+        widget.name = originalname;
+        widget.width = width;
+
+        WidgetModel
+            .updateWidget(widgetId, widget)
+            .then(function(retVal){
+                    res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
+                }),
         res.redirect("/#/user/"+userId+"/website/"+websiteId+"/page/"+pageId+"/widget/"+widgetId);
     }
 
     function createWidget(req, res) {
+        var pageId = req.params.pageId;
         var widget = req.body;
-        console.log(widget);
-        widgets.push(widget);
-        res.send(widget);
+
+        WidgetModel
+            .createWidget(pageId, widget)
+            .then(function(retVal){
+                    res.send(retVal);
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });        
     }
 
     function findAllWidgetsForPage(req, res) {
-        var pid = parseInt(req.params.pageId);
-        var result = [];
-        for(var w in widgets) {
-            //console.log(widgets[w].pageId);
-            if(widgets[w].pageId === pid) {
-                result.push(widgets[w]);
-            }
-        }
-        res.json(result);
+        
+        console.log("This is find all widgets for page, server!");
+        var pageId = req.params.pageId;
+
+        WidgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(function(retVal) {
+                res.send(retVal);
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });
+        
     }
 
     function findWidgetById(req, res){
-        var widgetId = parseInt(req.params.widgetId);
+        var widgetId = req.params.widgetId;
 
-        var widget = _.find(widgets, function(widget){
-            return widget._id === widgetId;
-        });
-        res.send(widget || '0');
+        WidgetModel
+            .findWidgetById(widgetId)
+            .then(function(retVal) {
+                    res.send(retVal);
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });
     }
 
     function updateWidget(req, res){
+
         var update = req.body;
-        var widgetId = parseInt(req.params.widgetId);
-        for(var w in widgets) {
-            if(widgets[w]._id === widgetId) {
-                widgets[w] = update;
-            }
-        }
-        res.sendStatus(200);
+        var widgetId= req.params.widgetId;
+
+        WidgetModel
+            .updateWidget(widgetId, update)
+            .then(function(retVal){
+                    res.send(retVal);
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });
+
     }
 
     function deleteWidget(req, res){
-        console.log("Hello from deleteWidget - server");
-        var widgetId = parseInt(req.params.widgetId);
-        for(var w in widgets) {
-            if(widgets[w]._id === widgetId) {
-                widgets.splice(w, 1);
-            }
-        }
-        res.sendStatus(200);
+        var widgetId = req.params.widgetId;
+        WidgetModel
+            .deleteWidget(widgetId)
+            .then(function(retVal){
+                    res.send(retVal);
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });
     }
 
     function sortItem(req, res){

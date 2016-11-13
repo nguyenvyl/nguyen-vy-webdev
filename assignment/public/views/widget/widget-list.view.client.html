@@ -38,7 +38,7 @@
                         <span ng-bind-html="model.trustHTML(widget.text)"></span>
                     </div>
                 </div>
-                <div ng-switch-when="YOUTUBE">
+                <div ng-switch-when="YOUTUBE" class="youtube-widget">
                     <div class="widgetItem">
                         <span class="widgetEdit">
                                 <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}"
@@ -60,8 +60,23 @@
                         <img ng-src="{{widget.url}}" class="img-responsive" width="{{widget.width}}">
                     </div>
                 </div>
-            </div>
-        </div>
+
+                <div ng-switch-when="TEXT">
+                    <div class="widgetItem">
+                        <span class="widgetEdit">
+                            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}"
+                            class="glyphicon glyphicon-cog blueIcon widgetIcon"></a>
+                            <a class="glyphicon glyphicon-menu-hamburger grayIcon widgetIcon"></a>
+                        </span>
+
+                        <div ng-if="widget.formatted" text-angular ta-toolbar="..."></div>
+                        <input ng-if="!widget.formatted && (!widget.rows || widget.rows===1)"
+                               placeholder="{{widget.textInput.placeholder}}" class="form-control"/>
+                        <textarea ng-if="!widget.formatted && (widget.rows > 1)"
+                                  rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+                                  class="form-control">{{widget.text}}</textarea>
+                        </div>
+                </div>
     </div>
 </div>
 
