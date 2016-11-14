@@ -15,14 +15,20 @@
     <div ng-model="model.widget.text"
          text-angular
          ta-toolbar="[
-                      ['h1','h2','h3'],
+                      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
                       ['bold','italics','underline','strikeThrough'],
                       ['ul','ol'],
                       ['justifyLeft','justifyCenter','justifyRight','justifyFull'],
                       ['indent','outdent'],
                       ['html']
-                      ]">
+                      ]"
+         ta-toolbar-class="btn-toolbar"
+         ta-toolbar-group-class="btn-group"
+         ta-toolbar-button-class="btn btn-default"
+         ta-toolbar-active-button-class="active">
     </div>
+    <br>
+    <br>
     <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>
 </div>
 

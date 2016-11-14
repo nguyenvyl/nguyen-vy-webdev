@@ -7,7 +7,6 @@ module.exports = function(app, WidgetModel) {
     var upload = multer({ dest: __dirname+'/../public/uploads' });
 
     function uploadImage(req, res) {
-        console.log("This is upload image from widget.service.server");
         var widget        = req.body;
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
@@ -58,19 +57,23 @@ module.exports = function(app, WidgetModel) {
     }
 
     function findAllWidgetsForPage(req, res) {
-        
-        console.log("This is find all widgets for page, server!");
         var pageId = req.params.pageId;
-
         WidgetModel
             .findAllWidgetsForPage(pageId)
             .then(function(retVal) {
+                retVal = sortWidgetList(retVal);
                 res.send(retVal);
                 },
                 function(err){
                     res.sendStatus(400).send(err);
                 });
         
+    }
+
+    function sortWidgetList(widgetList){
+        return widgetList.sort(function compareFn(a, b){
+            return a.index - b.index;
+        })
     }
 
     function findWidgetById(req, res){
@@ -87,9 +90,10 @@ module.exports = function(app, WidgetModel) {
     }
 
     function updateWidget(req, res){
-
+        //console.log("This is updateWidget - service.server");
         var update = req.body;
         var widgetId= req.params.widgetId;
+        //console.log(update);
 
         WidgetModel
             .updateWidget(widgetId, update)
@@ -99,7 +103,6 @@ module.exports = function(app, WidgetModel) {
                 function(err){
                     res.sendStatus(400).send(err);
                 });
-
     }
 
     function deleteWidget(req, res){
@@ -114,13 +117,6 @@ module.exports = function(app, WidgetModel) {
                 });
     }
 
-    function sortItem(req, res){
-        console.log("This is sort item, client!");
-        var sortedWidgets = req.body;
-        widgets = sortedWidgets;
-        res.send(widgets);
-    }
-    app.put("/api/sort", sortItem);
     app.get("/api/page/:pageId/widget", findAllWidgetsForPage);
     app.post("/api/page/:pageId/widget", createWidget);
     app.put("/api/widget/:widgetId", updateWidget);

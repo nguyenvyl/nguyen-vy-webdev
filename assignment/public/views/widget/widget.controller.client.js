@@ -13,31 +13,49 @@
         vm.trustHTML = trustHTML;
         vm.trustURL = trustURL;
         vm.embedYoutube = embedYoutube;
+        vm.sortItem = sortItem;
 
         function init() {
             var listPromise = WidgetService.findAllWidgetsForPage(vm.pageId);
             listPromise
                 .success(function(widgets){
                     vm.widgets = widgets;
+                    console.log(vm.widgets);
                 });
-        }
 
+        }
+        init();
+
+        // Sorts widgets whenever they're dragged and dropped.
+        // Each widget has an 'index' field, which keeps track of its position in the page's list of widgets.
         function sortItem(start, end) {
             console.log("start: " + start);
             console.log("end: " + end);
 
+            // Updates the current widget array so that sorting is immediately viewable to the user.
             var moved = vm.widgets.splice(start, 1)[0];
             vm.widgets.splice(end, 0, moved);
 
-            var promise = WidgetService.sortItem(vm.widgets);
-            promise
-                .success(function(){
-                    console.log("Widget order has been updated!");
-                });
-        }
-        vm.sortItem = sortItem;
-        init();
+            // We also need to update the widget's index and update the database accordingly.
+            // Otherwise, the widget's order will not be saved.
 
+            // Account for case when a widget is taken from a later to an earlier position in the list.
+            if(start > end){
+                var tempEnd = end;
+                end = start;
+                start = tempEnd;
+            }
+
+            // Update all widget indices that were affected by the widget move.
+            for (i = start; i <= end; i++) {
+                vm.widgets[i].index = i;
+                var promise = WidgetService.updateWidget(vm.widgets[i]._id, vm.widgets[i]);
+                promise
+                    .success(function () {
+
+                    });
+            }
+        }
 
         function trustHTML(htmlCode){
             return $sce.trustAsHtml(htmlCode);
@@ -64,8 +82,6 @@
                 return "Youtube link not valid";
             }
         }
-
-
     }
 
     function NewWidgetController($routeParams, $location, WidgetService) {
@@ -76,7 +92,7 @@
         vm.createWidget = createWidget;
 
         function init() {
-            var listPromise = WidgetService.findAllWidgetsForPage(vm.websiteId);
+            var listPromise = WidgetService.findAllWidgetsForPage(vm.pageId);
             listPromise
                 .success(function(widgets){
                     vm.widgets = widgets;
@@ -85,6 +101,8 @@
         init();
 
         function createWidget(widgetType) {
+
+            console.log(vm.widgets);
             var newWidget;
 
             switch(widgetType) {
@@ -101,9 +119,12 @@
                     newWidget = {widgetType: "IMAGE", width: "100%", url: ""};
                     break;
                 case "TEXT":
-                    newWidget = {widgetType: "TEXT", rows: 1, placeholder: "", formatted: true }
+                    newWidget = {widgetType: "TEXT", rows: 1, placeholder: "", formatted: true };
                     break;
             }
+
+            // New widgets are, by default, added to the end of the widget list.
+            newWidget.index = vm.widgets.length;
 
             WidgetService
                 .createWidget(vm.pageId, newWidget)
@@ -123,8 +144,10 @@
         vm.editHTML = editHTML;
         vm.editIMAGE = editIMAGE;
         vm.editYOUTUBE = editYOUTUBE;
+        vm.editTEXT = editTEXT;
         vm.deleteWidget = deleteWidget;
         vm.uploadImage = uploadImage;
+
 
         function init() {
             var widgetPromise = WidgetService.findWidgetById(vm.widgetId);
@@ -132,40 +155,47 @@
                 .success(function(widget){
                     vm.widget = widget;
                 })
+
+            var listPromise = WidgetService.findAllWidgetsForPage(vm.pageId);
+            listPromise
+                .success(function(widgets){
+                    vm.widgets = widgets;
+                });
         }
         init();
 
         
         function editHTML(text){
-            var update = {widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
+            //var update = {widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
             WidgetService
-                .updateWidget(vm.widgetId, update)
+                .updateWidget(vm.widgetId, vm.widget)
                 .success(function(widget){
                     $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
                 })
         }
 
         // This allows changes to a YouTube widget. It also checks for valid input for the width value.
-        function editYOUTUBE(url, width) {
-            var checkWidth = formatWidth(width);
+        function editYOUTUBE() {
+            var checkWidth = formatWidth(vm.widget.width);
             if(checkWidth){
-                var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
+                //var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
+                vm.widget.width = checkWidth;
                 WidgetService
-                    .updateWidget(vm.widgetId, update)
+                    .updateWidget(vm.widgetId, vm.widget)
                     .success(function(widget){
                         $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
                     })
             }
         }
 
-        function editHEADER(text, size){
-            if(size < 1 || size > 6){
+        function editHEADER(){
+            if(vm.widget.size < 1 || vm.widget.size > 6){
                 vm.alert = "Header size can only be between 1 and 6."
             }
             else {
-                var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
+                //var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
                 WidgetService
-                    .updateWidget(vm.widgetId, update)
+                    .updateWidget(vm.widgetId, vm.widget)
                     .success(function(widget){
                         $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
                     })
@@ -178,13 +208,24 @@
 
             var checkWidth = formatWidth(width);
             if(checkWidth){
-                var update = {name: vm.widget.name,  widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
+                vm.widget.width = checkWidth;
+                //var update = {name: vm.widget.name,  widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
                 WidgetService
-                    .updateWidget(vm.widgetId, update)
+                    .updateWidget(vm.widgetId, vm.widget)
                     .success(function(widget){
                         $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
                     })
             }
+        }
+
+        function editTEXT(){
+            console.log("editText");
+            console.log(vm.widget);
+            WidgetService
+                .updateWidget(vm.widgetId, vm.widget)
+                .success(function(widget){
+                    $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
+                })
         }
 
         function uploadImage(file){
@@ -198,20 +239,34 @@
                 headers: {'Content-Type': undefined}
             })
                 .success(function(){
-                    console.log("success!!");
+                    console.log("Image uploaded!");
                 })
                 .error(function(){
-                    console.log("error!!");
+                    console.log("Image upload error!!");
                 });
 
         }
 
         function deleteWidget(widgetId){
+
+            var indexToDel = vm.widget.index;
+            var deleted = vm.widgets.splice(indexToDel, 1)[0];
+
             WidgetService
                 .deleteWidget(widgetId)
                 .success(function(widget){
                     $location.url("/user/" + vm.userId + "/website/" + vm.websiteId + "/page/" + vm.pageId + "/widget/");
-                })
+                });
+
+            // When a widget is deleted, the indices of all widgets following it need to be updated to maintain the list order.
+            for(i = indexToDel; i < vm.widgets.length; i++){
+                vm.widgets[i].index = i;
+                var promise = WidgetService.updateWidget(vm.widgets[i]._id, vm.widgets[i]);
+                promise
+                    .success(function () {
+
+                    });
+            }
         }
 
         // Checks if a string is a number between 1 and 100.

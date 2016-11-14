@@ -36,8 +36,6 @@
         init();
 
         function createPage(page){
-            console.log("Entering create page");
-            console.log(page);
             if(!page.name || !page.title){
                 vm.alert = "Please type input for all fields.";
                 return;
