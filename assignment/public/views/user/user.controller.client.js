@@ -15,7 +15,7 @@
             promise
                 .success(function(user){
                     if(user == null){
-                        vm.alert = "No such user. To register, hit the Register button below!";
+                        vm.alert = "User not found. To register, hit the Register button below!";
                     }
                     else{
                         $location.url("/user/" + user._id);
@@ -30,33 +30,29 @@
 
 
     function RegisterController($location, UserService) {
-        console.log("Hello from Register Controller!");
-        console.log("This is the user service: ");
-        console.log(UserService);
         var vm = this;
         vm.register = register;
 
         function register(username, password1, password2){
-            console.log("This is register user - client");
             // Check if the passwords match.
             if(password1 !== password2){
                 vm.alert = "Passwords do not match.";
             }
-            // Check if this username is already taken.
-            else if(UserService.findUserByUsername(username)){
-                vm.alert = "Username is already taken.";
-            }
 
             UserService
                 .createUser(username, password1)
-                .success(function(user){
-                    console.log("Hey this is the user controller, and this user was created!");
-                    console.log(user);
-                    $location.url("/user/" + user._id);
+                .success(function(retVal){
+                    console.log(retVal);
+                    if(retVal === 'User exists'){
+                        vm.alert = "Username is already taken, sorry!";
+                    }
+                    else{
+                        $location.url("/user/" + retVal._id);
+                    }
                 })
                 .error(function(){
                     console.log("Server error!");
-                })
+                });
         }
     }
 
@@ -86,7 +82,6 @@
         }
 
         function deleteUser(){
-            console.log("Hello from delete user controller - client");
             UserService
                 .deleteUser(vm.user._id)
                 .success(function(){

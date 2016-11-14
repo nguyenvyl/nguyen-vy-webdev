@@ -34,16 +34,11 @@
         init();
 
         function createWebsite(website){
-            console.log("Entering create website - website.controller.client.js");
-            console.log("We're creating a website for this user: " + vm.userId);
-            console.log(website);
             if(!website.name || !website.description){
                 vm.alert = "Please type input for all fields.";
                 return;
             }
             else{
-                //website._id = (new Date()).getTime();
-                //website.developerId = vm.userId;
                 WebsiteService
                     .createWebsite(vm.userId, website)
                     .success(function () {
@@ -81,9 +76,6 @@
 
 
         function updateWebsite() {
-            // console.log("This is update website, controller!");
-            // console.log("The controller is passing in this website:");
-            // console.log(vm.website);
             var promise = WebsiteService.updateWebsite(vm.website);
             promise
                 .success(function(){
@@ -92,9 +84,6 @@
         }
 
         function deleteWebsite(website) {
-
-            console.log("Hello from delete website controller - client");
-            console.log("We received a website with ID " + website._id);
             WebsiteService
                 .deleteWebsite(website)
                 .success(function(){
@@ -104,8 +93,6 @@
                     console.log("We done had some errors dawg");
                 });
         }
-
-
     }
 
 })();

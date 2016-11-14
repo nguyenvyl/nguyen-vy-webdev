@@ -18,6 +18,7 @@ module.exports = function(app, UserModel) {
             .findUserByUsername(username)
             .then(
                 function(response){
+                    console.log(response);
                     res.json(response);
                 },
                 function(err){
@@ -58,7 +59,7 @@ module.exports = function(app, UserModel) {
             .findUserByUsername(user.username)
             .then(function(retVal) {
                 if (retVal != null) { //user already reg
-                    res.sendStatus(400).send("User already created!");
+                    res.send('User exists');
                 } else {
                     UserModel
                         .createUser(user)

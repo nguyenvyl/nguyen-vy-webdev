@@ -41,9 +41,6 @@ module.exports=function(mongoose, db){
     }
 
     function findUserById(id) {
-        console.log("findUserById - user.model.server.js");
-        console.log("We're looking for ID: " + id);
-
         var deferred = q.defer();
 
         userModel.findById(id, function(err, retVal){
@@ -61,7 +58,6 @@ module.exports=function(mongoose, db){
 
     function updateUser(id, user)
     {
-        console.log("updateUser - user.model.server.js");
         var deferred = q.defer();
 
         userModel.update({_id: id},{$set: user}, function(err, retVal){
@@ -107,11 +103,7 @@ module.exports=function(mongoose, db){
         return deferred.promise;
     }
 
-    function findUserByCredentials(credentials)
-    {
-        console.log("Find user by credentials - user.model.server.js");
-        console.log("We're searching for this user:");
-        console.log(credentials);
+    function findUserByCredentials(credentials) {
         var deferred = q.defer();
 
         userModel.findOne(
