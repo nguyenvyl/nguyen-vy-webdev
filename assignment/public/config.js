@@ -1,3 +1,5 @@
+var q = require("q");
+
 (function() {
     angular
         .module("WebAppMaker")
@@ -59,7 +61,8 @@
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
             })
             .when("/register", {
                 templateUrl: "views/user/register.view.client.html",
@@ -115,4 +118,20 @@
                 redirectTo: "/home"
             });
     }
+
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+        $http.get('/api/loggedin').success(function(user) {
+            $rootScope.errorMessage = null;
+            if (user !== '0') {
+                $rootScope.currentUser = user;
+                deferred.resolve();
+            } else {
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+        return deferred.promise;
+    };
+
 })();
