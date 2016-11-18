@@ -1,17 +1,14 @@
-"use strict"
+"use strict";
 
 var q = require("q");
 
-module.exports=function(mongoose, db){
-    //connect to mongo db
-    var websiteSchema = require("./website.schema.server.js")(mongoose);
-    var websiteModel = mongoose.model("Website", websiteSchema);
+module.exports=function(mongoose, db, WebsiteMongooseModel, PageModel, UserMongooseModel){
+
     var api;
 
     function findWebsiteById (websiteId){
-        console.log("This is findwebsitebyId - website.model.server.js");
         var deferred = q.defer();
-        websiteModel.findById(websiteId, function(err, retVal){
+        WebsiteMongooseModel.findById(websiteId, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -19,35 +16,39 @@ module.exports=function(mongoose, db){
                 deferred.resolve(retVal);
             }
         });
-        console.log("The model found this website: ");
-        console.log(deferred.promise);
         return deferred.promise;
-
     }
 
     function createWebsite(userId, website){
-        console.log("Hello from createWebsite - website.model.server.js");
         website._user = userId;
 
-        //websites.push(website); -- reference user
-        var deferred = q.defer();
 
-        websiteModel.create(website, function(err, retVal){
+        var deferred = q.defer();
+        WebsiteMongooseModel.create(website, function(err, newWebsite){
             if (err) {
                 deferred.reject(err);
             }
             else{
-                deferred.resolve(retVal);
+                UserMongooseModel.findById(userId, function(err, user){
+                    if(err){
+                        deferred.reject("The user you're trying to make a website for doesn't exist!");
+                        deleteWebsite(newWebsite._id);
+                    }
+                    else{
+                        console.log("Website ID: " + newWebsite._id);
+                        user._websites.push(newWebsite._id);
+                        user.save();
+                        deferred.resolve(newWebsite);
+                    }
+                });
             }
         });
         return deferred.promise;
     }
 
     function findAllWebsitesForUser(uid){
-
         var deferred = q.defer();
-
-        websiteModel.find({_user: uid}, function(err, retVal){
+        WebsiteMongooseModel.find({_user: uid}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -62,7 +63,7 @@ module.exports=function(mongoose, db){
     function updateWebsite(wid, website){
         var deferred = q.defer();
 
-        websiteModel.update({_id: wid}, {$set: website}, function(err, retVal){
+        WebsiteMongooseModel.update({_id: wid}, {$set: website}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -76,7 +77,20 @@ module.exports=function(mongoose, db){
     function deleteWebsite(websiteId){
         var deferred = q.defer();
 
-        websiteModel.remove({_id: websiteId}, function(err, retVal){
+        // Delete all of the website's pages
+        PageModel
+            .findAllPagesForWebsite(websiteId)
+            .then(function(pages){
+                if(pages != null){
+                    var p;
+                    for(p in pages){
+                        PageModel.deletePage(pages[p]._id);
+                    }
+            }
+        });
+
+        // Delete the website.
+        WebsiteMongooseModel.remove({_id: websiteId}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -95,4 +109,4 @@ module.exports=function(mongoose, db){
         deleteWebsite: deleteWebsite
     };
     return api;
-}
+};

@@ -3,42 +3,42 @@
 
 var q = require("q");
 
-module.exports=function(mongoose, db) {
-    var widgetSchema = require("./widget.schema.server.js")(mongoose);
-    var widgetModel = mongoose.model("Widget", widgetSchema);
+module.exports=function(mongoose, db, WidgetMongooseModel, PageMongooseModel) {
+
     var api;
 
     function createWidget(pageId, widget){
 
-        //console.log("Hello from createWidget - widget.model.server.js");
-        //console.log("We're trying to make this widget:");
-
         widget._page = pageId;
-        //console.log(widget);
-
-        var deferred = q.defer();
-
-        widgetModel.create(widget, function(err, retVal){
-            if (err) {
-                //console.log("widget model - create widget ran into an error");
-                //console.log(err);
-                deferred.reject(err);
+        var pageDeferred = q.defer();
+        PageMongooseModel.findById(pageId, function(err, page){
+            if(err){
+                pageDeferred.reject("The page you're trying to make a widget for doesn't exist!");
+                return pageDeferred.promise();
             }
             else{
-                //console.log("widget model - create widget success!");
-                deferred.resolve(retVal);
+                page._widgets.push(widget._id);
+                page.save();
             }
         });
 
-        //console.log(deferred.promise);
-        return deferred.promise;
+        var deferred = q.defer();
 
+        WidgetMongooseModel.create(widget, function(err, retVal){
+            if (err) {
+                deferred.reject(err);
+            }
+            else{
+                deferred.resolve(retVal);
+            }
+        });
+        return deferred.promise;
     }
 
     function findWidgetById(widgetId){
         //console.log("This is find widget by id - widget.model.server.js");
         var deferred = q.defer();
-        widgetModel.findById(widgetId, function(err, retVal){
+        WidgetMongooseModel.findById(widgetId, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -55,7 +55,7 @@ module.exports=function(mongoose, db) {
     function findAllWidgetsForPage(pageId){
         var deferred = q.defer();
 
-        widgetModel.find({_page: pageId}, function(err, retVal){
+        WidgetMongooseModel.find({_page: pageId}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -72,7 +72,7 @@ module.exports=function(mongoose, db) {
 
         var deferred = q.defer();
 
-        widgetModel.update({_id: widgetId}, {$set: widget}, function(err, retVal){
+        WidgetMongooseModel.update({_id: widgetId}, {$set: widget}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -87,7 +87,7 @@ module.exports=function(mongoose, db) {
         //console.log("hello from deleteWidget - widget.model.server.js");
         var deferred = q.defer();
 
-        widgetModel.remove({_id: widgetId}, function(err, retVal){
+        WidgetMongooseModel.remove({_id: widgetId}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -107,4 +107,4 @@ module.exports=function(mongoose, db) {
         deleteWidget: deleteWidget
     };
     return api;
-}
+};

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function(app, PageModel) {
-    console.log("Hi! This is your friendly neighborhood page service!");
+    // console.log("Hi! This is your friendly neighborhood page service!");
 
     function createPage(req, res) {
         var websiteId = req.params.websiteId;

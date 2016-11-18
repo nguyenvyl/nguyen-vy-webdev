@@ -9,7 +9,11 @@ module.exports=function(mongoose){
         lastName: String,
         email: String,
         phone: String,
-        websites: [websiteSchema],
+        //websites: [websiteSchema],
+        _websites:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Website'
+        }],
         dateCreated: {type: Date, default: Date.now}
     });
 

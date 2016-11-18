@@ -5,7 +5,7 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, UserService) {
+    function LoginController($location, $rootScope, UserService) {
         var vm = this;
         vm.login = login;
 
@@ -18,18 +18,29 @@
                         vm.alert = "User not found. To register, hit the Register button below!";
                     }
                     else{
+                        $rootScope.currentUser = user;
                         $location.url("/user/" + user._id);
                     }
                 })
                 .error(function(){
                     console.log("Server error, whoops!");
                 })
+        }
 
+        vm.logout = logout;
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function(response) {
+                        $rootScope.currentUser = null;
+                        $location.url("/login");
+                    });
         }
     }
 
 
-    function RegisterController($location, UserService) {
+    function RegisterController($location, $rootScope, UserService) {
         var vm = this;
         vm.register = register;
 
@@ -47,6 +58,7 @@
                         vm.alert = "Username is already taken, sorry!";
                     }
                     else{
+                        $rootScope.currentUser = retVal;
                         $location.url("/user/" + retVal._id);
                     }
                 })
@@ -56,7 +68,8 @@
         }
     }
 
-    function ProfileController($location, $routeParams, $route, UserService) {
+    function ProfileController($location, $routeParams, UserService) {
+
         var vm = this;
         var userId = $routeParams.uid;
         vm.updateUser = updateUser;
@@ -68,6 +81,7 @@
                 .success(function(user){
                     if(user != '0'){
                         vm.user = user;
+
                     }
                 })
                 .error(function(){
@@ -82,6 +96,9 @@
         }
 
         function deleteUser(){
+
+            // deleteAllWebsitesFromUser();
+
             UserService
                 .deleteUser(vm.user._id)
                 .success(function(){
@@ -91,6 +108,20 @@
                     console.log("We done had some errors dawg");
                 });
         }
+        //
+        // function deleteAllWebsitesFromUser(){
+        //     var websites = WebsiteService.findAllWebsitesForUser(vm.user._id);
+        //     for(w in websites){
+        //         WebsiteService
+        //             .deleteWebsite(websites[w])
+        //             .success(function(){
+        //                 console.log("Website with ID " + websites[w]._id + "deleted");
+        //             })
+        //             .error(function(){
+        //                 console.log("Error deleting a website from user");
+        //             })
+        //     }
+        // }
     }
 
 })();

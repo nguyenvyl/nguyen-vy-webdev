@@ -9,7 +9,10 @@ module.exports=function(mongoose){
         },
         name: String,
         description: String,
-        pages: [pageSchema],
+        _pages: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Page'
+        }],
         dateCreated: {type: Date, default: Date.now}
     });
     return websiteSchema;

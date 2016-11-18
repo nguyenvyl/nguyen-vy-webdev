@@ -1,44 +1,45 @@
 
-"use strict"
+"use strict";
 
 var q = require("q");
 
-module.exports=function(mongoose, db) {
-    var pageSchema = require("./page.schema.server.js")(mongoose);
-    var pageModel = mongoose.model("Page", pageSchema);
+module.exports=function(mongoose, db, PageMongooseModel, WidgetModel, WebsiteMongooseModel) {
+
     var api;
 
     function createPage(websiteId, page){
-
-        console.log("Hello from createPage - page.model.server.js");
-        console.log("We're trying to make this page:");
-
         page._website = websiteId;
-        console.log(page);
 
+        var websiteDeferred = q.defer();
+        WebsiteMongooseModel.findById(websiteId, function(err, website){
+            if(err){
+                websiteDeferred.reject("The website you're trying to make a page for doesn't exist!");
+                return websiteDeferred.promise;
+            }
+            else{
+                website._pages.push(page._id);
+                website.save();
+            }
+        });
+        
         var deferred = q.defer();
 
-        pageModel.create(page, function(err, retVal){
+        PageMongooseModel.create(page, function(err, retVal){
             if (err) {
                 console.log("page model - create page ran into an error");
                 console.log(err);
                 deferred.reject(err);
             }
             else{
-                console.log("page model - create page success!");
                 deferred.resolve(retVal);
             }
         });
-
-        console.log(deferred.promise);
         return deferred.promise;
-        
     }
 
     function findpageById(pageId){
-        console.log("This is find page by id - page.model.server.js");
         var deferred = q.defer();
-        pageModel.findById(pageId, function(err, retVal){
+        PageMongooseModel.findById(pageId, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -46,16 +47,14 @@ module.exports=function(mongoose, db) {
                 deferred.resolve(retVal);
             }
         });
-        console.log("The model found this page: ");
-        console.log(deferred.promise);
         return deferred.promise;
     }
     
     
     function findAllPagesForWebsite(websiteId){
-         var deferred = q.defer();
+        var deferred = q.defer();
 
-        pageModel.find({_website: websiteId}, function(err, retVal){
+        PageMongooseModel.find({_website: websiteId}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -72,7 +71,7 @@ module.exports=function(mongoose, db) {
 
         var deferred = q.defer();
 
-        pageModel.update({_id: pageId}, {$set: page}, function(err, retVal){
+        PageMongooseModel.update({_id: pageId}, {$set: page}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -84,10 +83,21 @@ module.exports=function(mongoose, db) {
     }
 
     function deletePage(pageId){
-        console.log("hello from deletePage - page.model.server.js");
+
         var deferred = q.defer();
 
-        pageModel.remove({_id: pageId}, function(err, retVal){
+        WidgetModel
+            .findAllWidgetsForPage(pageId)
+            .then(function(widgets){
+                if(widgets != null) {
+                    var w;
+                    for (w in widgets) {
+                        WidgetModel.deleteWidget(widgets[w]._id);
+                    }
+                }
+            });
+
+        PageMongooseModel.remove({_id: pageId}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -95,7 +105,6 @@ module.exports=function(mongoose, db) {
                 deferred.resolve(retVal);
             }
         });
-        //console.log(deferred.promise);
         return deferred.promise;
     }
 
@@ -107,4 +116,4 @@ module.exports=function(mongoose, db) {
         deletePage: deletePage
     };
     return api;
-}
+};

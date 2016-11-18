@@ -84,6 +84,7 @@
         }
 
         function deleteWebsite(website) {
+            console.log(website);
             WebsiteService
                 .deleteWebsite(website)
                 .success(function(){

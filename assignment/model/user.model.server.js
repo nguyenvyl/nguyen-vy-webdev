@@ -1,19 +1,17 @@
-//"use strict"
-//var users = require("./user.mock.json");
-//var guid = require("guid");
+"use strict";
 
 var q = require("q");
 
-module.exports=function(mongoose, db){
+// var require("./website.model.server.js")();
 
-    var userSchema = require("./user.schema.server.js")(mongoose);
-    var userModel = mongoose.model("userModel", userSchema);
+module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
+
     var api;
 
     //insert user into mongodb using q
     function createUser (user) {
         var deferred = q.defer();
-        userModel.create(user, function(err, retVal){
+        UserMongooseModel.create(user, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -24,12 +22,9 @@ module.exports=function(mongoose, db){
         return deferred.promise;
     }
 
-    function findAllUsers()
-    {
-        //return users;
+    function findAllUsers(){
         var deferred = q.defer();
-
-        userModel.find(function(err, retVal){
+        UserMongooseModel.find(function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -42,14 +37,11 @@ module.exports=function(mongoose, db){
 
     function findUserById(id) {
         var deferred = q.defer();
-
-        userModel.findById(id, function(err, retVal){
+        UserMongooseModel.findById(id, function(err, retVal){
             if (err) {
-                console.log("User not found!");
                 deferred.reject(err);
             }
             else{
-                console.log("User found!");
                 deferred.resolve(retVal);
             }
         });
@@ -59,8 +51,7 @@ module.exports=function(mongoose, db){
     function updateUser(id, user)
     {
         var deferred = q.defer();
-
-        userModel.update({_id: id},{$set: user}, function(err, retVal){
+        UserMongooseModel.update({_id: id},{$set: user}, function(err, retVal){
         if (err) {
             console.log("User not able to be updated!");
             deferred.reject(err);
@@ -74,25 +65,40 @@ module.exports=function(mongoose, db){
         return deferred.promise;
     }
 
-    function deleteUser(id){
-        var deferred = q.defer();
+    function deleteUser(id) {
 
-        userModel.remove({_id: id}, function(err, retVal){
+        // Delete all the user's websites.
+        WebsiteModel
+            .findAllWebsitesForUser(id)
+            .then(function (websites) {
+                console.log(websites);
+                if (websites != null) {
+                    var w;
+                    for (w in websites) {
+                        WebsiteModel.deleteWebsite(websites[w]._id);
+                    }
+                }
+            });
+
+        // Delete the user.
+        var deferred = q.defer();
+        UserMongooseModel.remove({_id: id}, function (err, retVal) {
             if (err) {
                 deferred.reject(err);
             }
-            else{
+            else {
                 deferred.resolve(retVal);
             }
         });
         return deferred.promise;
     }
 
+
     function findUserByUsername(username)
     {
         var deferred = q.defer();
 
-        userModel.findOne({username: username}, function(err, retVal){
+        UserMongooseModel.findOne({username: username}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
@@ -106,13 +112,12 @@ module.exports=function(mongoose, db){
     function findUserByCredentials(credentials) {
         var deferred = q.defer();
 
-        userModel.findOne(
+        UserMongooseModel.findOne(
             {
                 username: credentials.username,
                 password: credentials.password
             }, function(err, retVal){
                 if (err) {
-                    console.log("Whoops we done had an error");
                     deferred.reject(err);
                 }
                 else{

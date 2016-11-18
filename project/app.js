@@ -76,7 +76,7 @@
 
 module.exports = function(app, mongoose, db) {
 
-    console.log("Hello from assignment/app.js");
+    console.log("Hello from project/app.js");
 
     var connectionString = 'mongodb://testuser:testuser@ds033106.mlab.com:33106/nguyenvyl_webdev';
 
@@ -85,35 +85,16 @@ module.exports = function(app, mongoose, db) {
     var db_connection = mongoose.connection;
 
     //test if the connected successfully
-    // db_connection.on('connected', function(){
-    //     console.log("Connected to Mongo DB successfully!");
-    // });
-    //
-    // db_connection.on('error', function(){
-    //     console.log("Mongo DB connection error!");
-    // });
-    //
-    // db_connection.on('disconnected', function(){
-    //     console.log("Mongo DB disconnected!");
-    // });
-    var userSchema = require("./model/user.schema.server.js")(mongoose);
-    var websiteSchema = require("./model/website.schema.server.js")(mongoose);
-    var pageSchema = require("./model/page.schema.server.js")(mongoose);
-    var widgetSchema = require("./model/widget.schema.server.js")(mongoose);
+    db_connection.on('connected', function(){
+        console.log("project app Connected to Mongo DB successfully!");
+    });
 
-    var UserMongooseModel = mongoose.model("User", userSchema);
-    var WebsiteMongooseModel = mongoose.model("Website", websiteSchema);
-    var PageMongooseModel = mongoose.model("Page", pageSchema);
-    var WidgetMongooseModel = mongoose.model("Widget", widgetSchema);
+    db_connection.on('error', function(){
+        console.log("project app Mongo DB connection error!");
+    });
 
-    var WidgetModel =  require("./model/widget.model.server.js")(mongoose, db, WidgetMongooseModel, PageMongooseModel);
-    var PageModel =  require("./model/page.model.server.js")(mongoose, db, PageMongooseModel, WidgetModel, WebsiteMongooseModel);
-    var WebsiteModel = require("./model/website.model.server.js")(mongoose, db, WebsiteMongooseModel, PageModel, UserMongooseModel);
-    var UserModel = require("./model/user.model.server.js")(mongoose, db, UserMongooseModel, WebsiteModel);
-
-    var WidgetService = require("./services/widget.service.server.js")(app, WidgetModel);
-    var PageService = require("./services/page.service.server.js")(app, PageModel);
-    var WebsiteService = require("./services/website.service.server.js")(app, WebsiteModel);
-    var UserService = require("./services/user.service.server.js")(app, UserModel);
+    db_connection.on('disconnected', function(){
+        console.log("project app Mongo DB disconnected!");
+    });
 
 };

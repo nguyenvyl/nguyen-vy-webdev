@@ -39,7 +39,6 @@
             console.log("Hello from update user -- client");
             var url = '/api/user/' + user._id;
             return $http.put(url, user);
-
         }
 
         function deleteUser(userId){
@@ -49,13 +48,34 @@
             return $http.delete(url);
 
         }
+
+        function login(user){
+            return $http.post("/api/login", user);
+        }
+
+        function logout() {
+            return $http.post("/api/logout");
+        }
+
+        function register(user) {
+            return $http.post("/api/register", user);
+        }
+
+        function loggedIn() {
+            return $http.get("/api/loggedIn");
+        }
+
         api = {
             createUser            : createUser,
             findUserById          : findUserById,
             findUserByUsername    : findUserByUsername,
             findUserByCredentials : findUserByCredentials,
             updateUser            : updateUser,
-            deleteUser            : deleteUser
+            deleteUser            : deleteUser,
+            login                 : login,
+            logout                : logout,
+            register              : register,
+            loggedIn              : loggedIn
         };
         return api;
     }

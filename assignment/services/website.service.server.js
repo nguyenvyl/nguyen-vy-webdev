@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function(app, WebsiteModel) {
-    console.log("Hi! This is your friendly neighborhood website service!");
+    // console.log("Hi! This is your friendly neighborhood website service!");
 
     function createWebsite(req, res) {
         var uid = req.params.userId;

@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 module.exports = function(app, WidgetModel) {
-    console.log("Hi! This is your friendly neighborhood widget service!");
+    // console.log("Hi! This is your friendly neighborhood widget service!");
 
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../public/uploads' });

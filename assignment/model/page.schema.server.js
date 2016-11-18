@@ -9,7 +9,10 @@ module.exports=function(mongoose){
         name: String,
         title: String,
         description: String,
-        widgets: [widgetSchema],
+        _widgets: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Widget'
+        }],
         dateCreated: {type: Date, default: Date.now}
     });
 
