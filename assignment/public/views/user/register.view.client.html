@@ -3,9 +3,12 @@
       <h1>Register</h1>
         <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
       <form>
-        <input ng-model="model.user.username" id="username" type="text" placeholder="username" class="form-control">
-        <input ng-model="model.user.password1" id="password" type="password" placeholder="password"  class="form-control">
-        <input ng-model="model.user.password2" id="verifypw" type="password" placeholder="verify password" class="form-control">
+        <input ng-model="model.user.username" id="username" type="text" placeholder="username" class="form-control"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input ng-model="model.user.password1" id="password" type="password" placeholder="password"  class="form-control"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input ng-model="model.user.password2" id="verifypw" type="password" placeholder="verify password" class="form-control"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
           <a ng-click="model.register(model.user.username, model.user.password1, model.user.password2)" type="button" class="btn btn-primary btn-block">Register</a>
           <a href="#/login" type="button" class="btn btn-danger btn-block">Cancel</a>
       </form>

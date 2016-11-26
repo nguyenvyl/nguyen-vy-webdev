@@ -14,7 +14,11 @@ module.exports=function(mongoose){
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Website'
         }],
-        dateCreated: {type: Date, default: Date.now}
+        dateCreated: {type: Date, default: Date.now},
+        facebook: {
+            id:    String,
+            token: String
+        }
     });
 
     return userSchema;

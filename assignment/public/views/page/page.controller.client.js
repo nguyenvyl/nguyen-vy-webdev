@@ -36,8 +36,8 @@
         init();
 
         function createPage(page){
-            if(!page.name || !page.title){
-                vm.alert = "Please type input for all fields.";
+            if(!page.name) {
+                vm.alert = "Please provide a name for your page.";
                 return;
             }
             else{
@@ -86,6 +86,11 @@
             // console.log("This is update page, controller!");
             // console.log("The controller is passing in this page:");
             // console.log(vm.page);
+            if(!vm.page.name) {
+                vm.alert = "Please provide a name for your page.";
+                return;
+            }
+
             var promise = PageService.updatePage(vm.pageId, vm.page);
             promise
                 .success(function(){

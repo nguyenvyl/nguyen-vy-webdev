@@ -2,7 +2,7 @@
     angular
         .module("WebAppMaker")
         .factory("UserService", UserService);
-    function UserService($http) {
+    function UserService($http, $rootScope) {
 
         var api;
 
@@ -13,7 +13,6 @@
             };
             return $http.post('/api/user', newUser);
         }
-
 
         function findUserById(id) {
             console.log("Hello from find user by id-- client");
@@ -50,10 +49,13 @@
         }
 
         function login(user){
+            console.log("Hello from login - user client!");
+            console.log(user);
             return $http.post("/api/login", user);
         }
 
         function logout() {
+            console.log("Hello from logout - user client");
             return $http.post("/api/logout");
         }
 
@@ -62,7 +64,11 @@
         }
 
         function loggedIn() {
-            return $http.get("/api/loggedIn");
+            return $http.get("/api/loggedin");
+        }
+
+        function setCurrentUser(user) {
+            $rootScope.currentUser = user;
         }
 
 
@@ -77,7 +83,8 @@
             login                 : login,
             logout                : logout,
             register              : register,
-            loggedIn              : loggedIn
+            loggedIn              : loggedIn,
+            setCurrentUser        : setCurrentUser
         };
         return api;
     }

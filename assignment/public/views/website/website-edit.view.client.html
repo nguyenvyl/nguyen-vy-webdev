@@ -41,6 +41,7 @@
         <div class="col-sm-8">
             <div class="container-fluid">
                 <form>
+                    <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
                     <label for="websiteName">Name</label>
                     <input ng-model="model.website.name" id="websiteName" type="text" placeholder="The website name" class="form-control">
                     <label for="description">Description</label>

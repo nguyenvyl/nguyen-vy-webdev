@@ -34,8 +34,8 @@
         init();
 
         function createWebsite(website){
-            if(!website.name || !website.description){
-                vm.alert = "Please type input for all fields.";
+            if(!website.name){
+                vm.alert = "Please provide a name for your website.";
                 return;
             }
             else{
@@ -76,6 +76,10 @@
 
 
         function updateWebsite() {
+            if(!vm.website.name){
+                vm.alert = "Please provide a name for your website.";
+            }
+
             var promise = WebsiteService.updateWebsite(vm.website);
             promise
                 .success(function(){

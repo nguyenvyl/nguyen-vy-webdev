@@ -11,13 +11,13 @@
 </nav>
 <div class="container-fluid">
     <form>
+        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="ytName">Name</label>
-        <input id="ytName" type="text" class="form-control" placeholder="Name">
+        <input ng-model="model.widget.name" id="ytName" type="text" class="form-control" placeholder="Widget Name">
         <label for="ytText">Text</label>
-        <input id="ytText" type="text" class="form-control" placeholder="Text">
+        <input ng-model="model.widget.text" id="ytText" type="text" class="form-control" placeholder="Text">
         <label for="ytURL">URL</label>
         <input ng-model="model.widget.url" id="ytURL" type="url" class="form-control" placeholder="Youtube URL">
-        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="ytWidth">Width</label>
         <input ng-model="model.widget.width" id="ytWidth" type="text" class="form-control" placeholder="Width">
         <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>

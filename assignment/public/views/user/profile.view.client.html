@@ -20,7 +20,7 @@
         <input ng-model="model.user.lastName" id="lastname" type="text" placeholder="Last Name" name="lastname" class="form-control">
     </form>
     <a href="#/user/{{model.user._id}}/website" type="button" class="btn btn-primary btn-block">Websites</a>
-    <a href="#/login" type="button" class="btn btn-danger btn-block">Logout</a>
+    <a ng-click="model.logout()" type="button" class="btn btn-danger btn-block">Logout</a>
     <a class="btn btn-warning btn-block" ng-click="model.deleteUser()">Delete Account</a>
 </div>
 <nav class="navbar navbar-default navbar-fixed-bottom blue">

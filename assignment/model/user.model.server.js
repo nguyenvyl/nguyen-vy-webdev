@@ -9,14 +9,20 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
     var api;
 
     //insert user into mongodb using q
-    function createUser (user) {
+    function createUser(user){
+        console.log("Hello from createUser - user.model");
+        console.log("We want to make this user:");
+        console.log(user);
         var deferred = q.defer();
         UserMongooseModel.create(user, function(err, retVal){
+            console.log("We got this response:");
+            console.log(retVal);
             if (err) {
                 deferred.reject(err);
             }
             else{
                 deferred.resolve(retVal);
+                console.log(retVal);
             }
         });
         return deferred.promise;
@@ -94,37 +100,56 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
     }
 
 
-    function findUserByUsername(username)
-    {
+    function findUserByUsername(username){
+        // console.log("Hello from find user by username");
         var deferred = q.defer();
-
         UserMongooseModel.findOne({username: username}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
             else{
+                // console.log(retVal);
                 deferred.resolve(retVal);
             }
         });
         return deferred.promise;
     }
 
-    function findUserByCredentials(credentials) {
+    function findUserByCredentials(username, password) {
+        console.log("Hello from find user by credentials");
         var deferred = q.defer();
-
         UserMongooseModel.findOne(
             {
-                username: credentials.username,
-                password: credentials.password
+                username: username,
+                password: password
             }, function(err, retVal){
                 if (err) {
+                    console.log("Error finding user in the database");
                     deferred.reject(err);
                 }
                 else{
+                    console.log("User found!");
+                    deferred.resolve(retVal);
+                    console.log(retVal);
+                }
+            });
+        return deferred.promise;
+    }
+
+    function findUserByFacebookId(facebookId) {
+        console.log("Hello from findUserByFacebookId - User.model.server.js");
+        var deferred = q.defer();
+        UserMongooseModel.findOne({'facebook.id': facebookId},
+            function(err, retVal){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    console.log("Here's the Facebook user we found in our database:");
                     console.log(retVal);
                     deferred.resolve(retVal);
                 }
-            });
+        });
         return deferred.promise;
     }
 
@@ -135,7 +160,8 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
         updateUser: updateUser,
         deleteUser: deleteUser,
         findUserByUsername: findUserByUsername,
-        findUserByCredentials: findUserByCredentials
+        findUserByCredentials: findUserByCredentials,
+        findUserByFacebookId: findUserByFacebookId
     };
     return api;
-}
+};

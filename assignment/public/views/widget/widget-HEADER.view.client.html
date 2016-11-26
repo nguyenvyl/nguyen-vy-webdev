@@ -8,12 +8,12 @@
     </div>
 </nav>
     <div class="container-fluid">
-      <form> 
+      <form>
+        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="widgetName">Name</label>
-        <input ng-model="model.widget.name" id="widgetName" type="text" placeholder="Heading Name" class="form-control">
+        <input ng-model="model.widget.name" id="widgetName" type="text" placeholder="Widget Name" class="form-control">
         <label for="widgetText">Text</label>
         <input ng-model="model.widget.text" id="widgetText" type="text" placeholder="Your heading here" class="form-control">
-        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <label for="widgetSize">Size</label>
         <input ng-model="model.widget.size" id="widgetSize" type="number" placeholder="3" class="form-control">
           <a ng-click="model.deleteWidget(model.widgetId)" type="button" class="btn btn-danger btn-block">Delete</a>

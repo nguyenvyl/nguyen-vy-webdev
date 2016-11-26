@@ -9,34 +9,30 @@
         var vm = this;
         vm.login = login;
 
-        function login(username, password) {
+
+        function login() {
             console.log("Hello from Login Controller login");
-            var promise = UserService.findUserByCredentials(username, password);
-            promise
-                .success(function(user){
-                    if(user == null){
-                        vm.alert = "User not found. To register, hit the Register button below!";
-                    }
-                    else{
-                        $rootScope.currentUser = user;
-                        $location.url("/user/" + user._id);
-                    }
+            if(!vm.user.username || !vm.user.password){
+                vm.alert = "Please provide both a username and password.";
+            }
+
+            UserService
+                .login({
+                    username: vm.user.username,
+                    password: vm.user.password
                 })
-                .error(function(){
-                    console.log("Server error, whoops!");
-                })
+                .then(function(response){
+                    // console.log("Login user controller received this response: ");
+                    // console.log(response);
+                    if(response.data) {
+                        UserService.setCurrentUser(response.data);
+                        var user = response.data;
+                        $location.url("/user/"+user._id);
+                    }
+                });
         }
 
-        vm.logout = logout;
-        function logout() {
-            UserService
-                .logout()
-                .then(
-                    function(response) {
-                        $rootScope.currentUser = null;
-                        $location.url("/login");
-                    });
-        }
+
     }
 
 
@@ -45,21 +41,39 @@
         vm.register = register;
 
         function register(username, password1, password2){
+            if(!username || !password1 || !password2){
+                vm.alert = "Please fill in all fields to register.";
+                return;
+            }
             // Check if the passwords match.
             if(password1 !== password2){
                 vm.alert = "Passwords do not match.";
+                return;
             }
 
             UserService
                 .createUser(username, password1)
-                .success(function(retVal){
-                    console.log(retVal);
-                    if(retVal === 'User exists'){
+                .success(function(user){
+                    console.log(user);
+                    if(user === 'User exists'){
                         vm.alert = "Username is already taken, sorry!";
+                        return;
                     }
                     else{
-                        $rootScope.currentUser = retVal;
-                        $location.url("/user/" + retVal._id);
+                        console.log("We're going to try to log this user in: ");
+                        console.log(user);
+                        UserService
+                            .login(user)
+                            .then(function(response){
+                                console.log("Register controller tried to log in and here's what we got: ");
+                                console.log(response);
+                                if(response.data) {
+                                    UserService.setCurrentUser(response.data);
+                                    var user = response.data;
+                                    $location.url("/user/"+user._id);
+                                }
+                            });
+                        $location.url("/user/" + user._id);
                     }
                 })
                 .error(function(){
@@ -74,6 +88,7 @@
         var userId = $routeParams.uid;
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
+        vm.logout = logout;
 
         function init(){
             var promise = UserService.findUserById(userId);
@@ -96,9 +111,6 @@
         }
 
         function deleteUser(){
-
-            // deleteAllWebsitesFromUser();
-
             UserService
                 .deleteUser(vm.user._id)
                 .success(function(){
@@ -108,20 +120,16 @@
                     console.log("We done had some errors dawg");
                 });
         }
-        //
-        // function deleteAllWebsitesFromUser(){
-        //     var websites = WebsiteService.findAllWebsitesForUser(vm.user._id);
-        //     for(w in websites){
-        //         WebsiteService
-        //             .deleteWebsite(websites[w])
-        //             .success(function(){
-        //                 console.log("Website with ID " + websites[w]._id + "deleted");
-        //             })
-        //             .error(function(){
-        //                 console.log("Error deleting a website from user");
-        //             })
-        //     }
-        // }
+
+        function logout() {
+            UserService
+                .logout()
+                .then(
+                    function(response) {
+                        UserService.setCurrentUser(null);
+                        $location.url("/login");
+                    });
+        }
     }
 
 })();

@@ -1,4 +1,3 @@
-var q = require("q");
 
 (function() {
     angular
@@ -58,6 +57,9 @@ var q = require("q");
                 controller: "LoginController",
                 controllerAs: "model"
             })
+            // .when("/user", {
+            //     redirectTo: "/user/:uid"
+            // })
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
@@ -72,7 +74,8 @@ var q = require("q");
             .when("/user/:uid/website", {
                 templateUrl: "views/website/website-list.view.client.html",
                 controller: "WebsiteListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
             })
             .when("/user/:uid/website/new", {
                 templateUrl: "views/website/website-new.view.client.html",
@@ -87,7 +90,8 @@ var q = require("q");
             .when("/user/:uid/website/:wid/page", {
                 templateUrl: "views/page/page-list.view.client.html",
                 controller: "PageListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
             })
             .when("/user/:uid/website/:wid/page/new", {
                 templateUrl: "views/page/page-new.view.client.html",
@@ -102,7 +106,8 @@ var q = require("q");
             .when("/user/:uid/website/:wid/page/:pid/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
                 controller: "WidgetListController",
-                controllerAs: "model"
+                controllerAs: "model",
+                resolve: { loggedin: checkLoggedin }
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/new", {
                 templateUrl: "views/widget/widget-choose.view.client.html",
@@ -120,15 +125,22 @@ var q = require("q");
     }
 
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+        console.log("Entering checkLoggedin");
+        // console.log("Current location is: ");
+        // console.log($location);
         var deferred = $q.defer();
         $http.get('/api/loggedin').success(function(user) {
             $rootScope.errorMessage = null;
+            console.log("Check logged in get request is: ");
+            console.log(user);
             if (user !== '0') {
                 $rootScope.currentUser = user;
                 deferred.resolve();
+                //$location.url('/user/:uid');
             } else {
+                $rootScope.error = "You need to log in.";
                 deferred.reject();
-                $location.url('/');
+                $location.url('/login');
             }
         });
         return deferred.promise;

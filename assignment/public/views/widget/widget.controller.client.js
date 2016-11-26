@@ -102,7 +102,7 @@
 
         function createWidget(widgetType) {
 
-            console.log(vm.widgets);
+            //console.log(vm.widgets);
             var newWidget;
 
             switch(widgetType) {
@@ -154,7 +154,7 @@
             widgetPromise
                 .success(function(widget){
                     vm.widget = widget;
-                })
+                });
 
             var listPromise = WidgetService.findAllWidgetsForPage(vm.pageId);
             listPromise
@@ -165,8 +165,15 @@
         init();
 
         
-        function editHTML(text){
-            //var update = {widgetType: vm.widget.widgetType, pageId: vm.pageId, text: text };
+        function editHTML(){
+            if(!vm.widget.name){
+                console.log("Please provide text for your widget.");
+                return;
+            }
+            if(!vm.widget.text){
+                console.log("Please provide text for your widget.");
+                return;
+            }
             WidgetService
                 .updateWidget(vm.widgetId, vm.widget)
                 .success(function(widget){
@@ -176,9 +183,12 @@
 
         // This allows changes to a YouTube widget. It also checks for valid input for the width value.
         function editYOUTUBE() {
+            if(!vm.widget.name){
+                vm.alert = "Please provide a name for your widget.";
+                return;
+            }
             var checkWidth = formatWidth(vm.widget.width);
             if(checkWidth){
-                //var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url};
                 vm.widget.width = checkWidth;
                 WidgetService
                     .updateWidget(vm.widgetId, vm.widget)
@@ -189,11 +199,20 @@
         }
 
         function editHEADER(){
+            if(!vm.widget.name){
+                vm.alert = "Please provide a name for your widget.";
+                return;
+            }
+            if(!vm.widget.text){
+                vm.alert = "Please provide text for your widget.";
+                return;
+            }
+
             if(vm.widget.size < 1 || vm.widget.size > 6){
                 vm.alert = "Header size can only be between 1 and 6."
+                return;
             }
             else {
-                //var update = {name: vm.widget.name, widgetType: vm.widget.widgetType, pageId: vm.pageId, size: size, text: text};
                 WidgetService
                     .updateWidget(vm.widgetId, vm.widget)
                     .success(function(widget){
@@ -202,14 +221,14 @@
             }
         }
 
-        function editIMAGE(url, width, file){
-            console.log("editImage");
-            console.log(file);
-
+        function editIMAGE(width, file){
+            if(!vm.widget.name){
+                vm.alert = "Please provide a name for your widget.";
+                return;
+            }
             var checkWidth = formatWidth(width);
             if(checkWidth){
                 vm.widget.width = checkWidth;
-                //var update = {name: vm.widget.name,  widgetType: vm.widget.widgetType, pageId: vm.pageId, width: checkWidth, url: url, name: vm.widget.name, };
                 WidgetService
                     .updateWidget(vm.widgetId, vm.widget)
                     .success(function(widget){
@@ -219,8 +238,14 @@
         }
 
         function editTEXT(){
-            console.log("editText");
-            console.log(vm.widget);
+            if(!vm.widget.name){
+                vm.alert = "Please provide a name for your widget.";
+                return;
+            }
+            if(!vm.widget.text){
+                vm.alert = "Please provide text for your widget.";
+                return;
+            }
             WidgetService
                 .updateWidget(vm.widgetId, vm.widget)
                 .success(function(widget){

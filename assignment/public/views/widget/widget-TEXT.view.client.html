@@ -9,9 +9,11 @@
 </nav>
     <div class="container-fluid">
       <form>
+        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
+        <label for="imgName">Name</label>
+        <input ng-model="model.widget.name" id="imgName" type="text" name="imgName" placeholder="Widget Name" class="form-control">
         <label for="widgetText">Text</label>
         <input ng-model="model.widget.text" id="widgetText" type="text" placeholder="Your Text Here" class="form-control">
-        <!--<div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>-->
         <label for="widgetRows">Rows</label>
         <input id="widgetRows" ng-model="model.widget.rows" class="form-control" type="number">
         <label for="widgetPlaceholder">Placeholder</label>
