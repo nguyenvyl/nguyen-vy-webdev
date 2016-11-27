@@ -1,4 +1,3 @@
-// var _ = require('lodash');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
@@ -14,7 +13,6 @@ module.exports = function(app, UserModel) {
         clientID     : process.env.FACEBOOK_CLIENT_ID,
         clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL  : process.env.FACEBOOK_CALLBACK_URL,
-        // enableProof: true
         profileFields: ['id', 'email', 'first_name', 'last_name']
     };
 
@@ -34,12 +32,10 @@ module.exports = function(app, UserModel) {
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     function serializeUser(user, done) {
-        // console.log("Hello from serialize user");
         done(null, user);
     }
 
     function deserializeUser(user, done) {
-        // console.log("Hello from deserialize user");
         UserModel
             .findUserById(user._id)
             .then(
@@ -53,8 +49,6 @@ module.exports = function(app, UserModel) {
     }
 
     function localStrategy(username, password, done) {
-        console.log("Hello from local Strategy");
-        console.log(username + " " + password);
         UserModel
             .findUserByUsername(username)
             .then(
@@ -72,37 +66,27 @@ module.exports = function(app, UserModel) {
     }
 
     function facebookStrategy(token, refreshToken, profile, done) {
-        // console.log("Your accessToken is :"+ token);
-        // console.log("Your refreshToken is :"+refreshToken );
-        // console.log("User Service - Facebook Strategy");
-        // console.log(profile);
         UserModel
             .findUserByFacebookId(profile.id)
             .then(function(user){
                 if(user != null){
-                    console.log("Facebook user found!");
                     return done(null, user);
                 }
                 else{ //create a new user in db
-                    console.log("Facebook user not found. Let's make a new Facebook user");
-                    // console.log(profile);
                     var newUser={
-                        username: profile.username,
+                        username: profile.emails[0].value.split('@')[0],
                         firstName: profile.name.givenName,
                         lastName: profile.name.familyName,
-                        email: profile.emails[0],
+                        email: profile.emails[0].value,
                         facebook: {
                             id: profile.id,
                             token: token
                         }
                     };
-                    console.log("Here's the new user:");
-                    console.log(newUser);
                     UserModel
                         .createUser(newUser)
                         .then(function(user){
                             if(user){
-                                console.log("New Facebook user created");
                                 return done(null, user);
                             }
                             else{
@@ -117,41 +101,6 @@ module.exports = function(app, UserModel) {
                     }
                 });
     }
-    // Use the GoogleStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and Google
-//   profile), and invoke a callback with a user object.
-//     passport.use(new GoogleStrategy({
-//             clientID: GOOGLE_CLIENT_ID,
-//             clientSecret: GOOGLE_CLIENT_SECRET,
-//             callbackURL: "http://localhost:3000/auth/google/callback"
-//         },
-//         function(accessToken, refreshToken, profile, done) {
-//             UserModel
-//                 .findUserByUsername(profile.username)
-//                 .then(function(user){
-//                         if(user){
-//                             return done(null, user);
-//                         }else{ //create a new user in db
-//                             var email = profile.emails[0].value;
-//                             var newUser={
-//                                 username: emails.split("@")[0],
-//                                 firstName: profile.name.givenName,
-//                                 lastName: profile.name.familyName,
-//                                 google: {
-//                                     id: profile.id,
-//                                     token: accessToken
-//                                 }
-//                             };
-//                             return UserModel.createUser(newUser);
-//                         }
-//                     },
-//                     function(err){
-//
-//                     });
-//         }
-//     ));
-
 
     function findUser(req, res){
         var query = req.query;
@@ -202,7 +151,7 @@ module.exports = function(app, UserModel) {
     }
 
     function createUser(req, res){
-        console.log("Time to create a user! --user.service.server");
+        // console.log("Time to create a user! --user.service.server");
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
 
@@ -258,10 +207,7 @@ module.exports = function(app, UserModel) {
    }
 
     function login(req, res) {
-        console.log("Hello from login - user.service.server");
         var user = req.user;
-        console.log("Here's the user: ");
-        console.log(user);
         if (user != null){
             delete user.password;
             res.json(user);
@@ -314,12 +260,6 @@ module.exports = function(app, UserModel) {
 
     app.get ('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
-    // app.get('/auth/facebook/callback',
-    //     passport.authenticate('facebook', {
-    //         successRedirect: '/#/user/:uid',
-    //         failureRedirect: '/#/login'
-    //     }));
-
     // This configuration allows for custom redirecting upon facebook callback.
     app.get('/auth/facebook/callback',function(req, res, next) {
         passport.authenticate('facebook', function (err, user, info) {
@@ -330,9 +270,7 @@ module.exports = function(app, UserModel) {
             if (!user) {
                 return res.redirect('/#/login');
             }
-
             var redirectUrl = '/#/user/' + user._id;
-
             // If we have previously stored a redirectUrl, use that,
             // otherwise, use the default.
             if (req.session.redirectUrl) {

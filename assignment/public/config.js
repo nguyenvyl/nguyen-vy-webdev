@@ -125,14 +125,9 @@
     }
 
     var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
-        console.log("Entering checkLoggedin");
-        // console.log("Current location is: ");
-        // console.log($location);
         var deferred = $q.defer();
         $http.get('/api/loggedin').success(function(user) {
             $rootScope.errorMessage = null;
-            console.log("Check logged in get request is: ");
-            console.log(user);
             if (user !== '0') {
                 $rootScope.currentUser = user;
                 deferred.resolve();

@@ -11,7 +11,7 @@
 
 
         function login() {
-            console.log("Hello from Login Controller login");
+
             if(!vm.user.username || !vm.user.password){
                 vm.alert = "Please provide both a username and password.";
             }

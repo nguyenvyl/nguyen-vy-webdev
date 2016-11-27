@@ -10,13 +10,8 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
 
     //insert user into mongodb using q
     function createUser(user){
-        console.log("Hello from createUser - user.model");
-        console.log("We want to make this user:");
-        console.log(user);
         var deferred = q.defer();
         UserMongooseModel.create(user, function(err, retVal){
-            console.log("We got this response:");
-            console.log(retVal);
             if (err) {
                 deferred.reject(err);
             }
@@ -116,7 +111,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
     }
 
     function findUserByCredentials(username, password) {
-        console.log("Hello from find user by credentials");
         var deferred = q.defer();
         UserMongooseModel.findOne(
             {
@@ -124,7 +118,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
                 password: password
             }, function(err, retVal){
                 if (err) {
-                    console.log("Error finding user in the database");
                     deferred.reject(err);
                 }
                 else{
@@ -137,7 +130,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
     }
 
     function findUserByFacebookId(facebookId) {
-        console.log("Hello from findUserByFacebookId - User.model.server.js");
         var deferred = q.defer();
         UserMongooseModel.findOne({'facebook.id': facebookId},
             function(err, retVal){
@@ -145,8 +137,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
                     deferred.reject(err);
                 }
                 else{
-                    console.log("Here's the Facebook user we found in our database:");
-                    console.log(retVal);
                     deferred.resolve(retVal);
                 }
         });
