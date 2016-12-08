@@ -1,0 +1,39 @@
+
+
+<!--<p>{{model.countries}}</p>-->
+
+<form>
+
+    <!--<select ng-model="model.countries">-->
+        <!--<option ng-repeat="country in model.countries" value="{{country.name}}">{{country.name}}</option>-->
+    <!--</select>-->
+    <select ng-options="country as country.name for country in model.countries" ng-model="selected" ng-change="model.search.country=selected.name"></select>
+    <br>
+
+    <select ng-options="state as state.state for state in selected.states" ng-model="selectedState" ng-change="model.search.state=selectedState.state"></select>
+    <input ng-model="model.search.city" type="text" placeholder="City" class="form-control">
+
+    <!--<input ng-model="model.search.country" type="text" placeholder="Country" class="form-control">-->
+    <!--<input ng-model="model.search.state" type="text" placeholder="State"  class="form-control">-->
+    <input ng-model="model.search.trailName" type="text" placeholder="Trail Name" class="form-control">
+    <select ng-model="model.search.activity" placeholder="Activity" class="form-control">
+        <option value="hiking">Hiking</option>
+        <option value="mountain biking">Mountain Biking</option>
+        <option value="camping">Camping</option>
+        <option value="caving">Caving</option>
+        <option value="trail running">Trail Running</option>
+        <option value="snow sports">Snow Sports</option>
+        <option value="horseback riding">Horseback Riding</option>
+        <option value="atv">ATV</option>
+        <option value="water sports">Water Sports</option>
+    </select>
+    <input ng-model="model.search.radius" type="number" placeholder="Search Radius (miles)" class="form-control">
+    <a ng-click="model.getTrails()" class="btn btn-primary btn-block">Search</a>
+</form>
+
+<div ng-repeat="place in model.searchResults">
+    <h2>{{place.name}}</h2>
+    <p>{{place.description}}</p>
+    <p>{{place.directions}}</p>
+    <!--<p>{{place.activities.activity_type_name}}</p>-->
+</div>
