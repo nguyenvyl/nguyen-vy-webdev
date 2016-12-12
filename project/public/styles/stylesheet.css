@@ -1,0 +1,158 @@
+html{
+    height: 100%;
+}
+
+body {
+    padding: 50px 0;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin-top: 30px;
+    height: 100%;
+}
+
+.body-text{
+    font-family: 'Nunito Sans', sans-serif;
+
+}
+
+.header-text {
+    font-family: 'Oswald', sans-serif;
+}
+
+.navbar{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.navbar .navbar-btn{
+    font-size: large;
+}
+
+.h-center{
+    text-align: center;
+}
+
+.scroll {
+    overflow-y: scroll;
+    height: 600px;
+    padding-left: 10px;
+}
+
+.dropdown-toggle{
+    width: 100%;
+    vertical-align: middle;
+}
+
+.row {
+    display: flex;               /* establish flex container */
+    align-items: center;         /* vertically center flex items */
+}
+
+.v-center {
+     vertical-align: middle;
+}
+
+#search-form{
+    font-size: large;
+}
+
+.verticalLine {
+    width:1px;
+    background-color: lightgray;
+    left: 25%;
+    position: absolute;
+    z-index: 5;
+    top:0;
+    bottom: 0;
+}
+
+.add-favorite-button{
+    font-size: large;
+    color: gray;
+    border-color: gray;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+    padding: .5em .5em .5em .5em;
+    margin-top: -6px;
+}
+
+.remove-favorite-button{
+    font-size: large;
+    background-color: #777777;
+    color: white;
+    border-radius: 2px;
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    padding: .5em .5em .5em .5em;
+    margin-top: -6px;
+}
+
+#email-button{
+    font-size: large;
+    background-color: #777777;
+    color: white;
+    border-radius: 2px;
+    border-width: 2px;
+    border-color: gray;
+    border-style: solid;
+    padding: .5em .5em .5em .5em;
+    margin-top: -6px;
+    text-decoration:none
+}
+
+#email-alert{
+    background-color: #e5e5e5;
+    border-radius: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.thumbnail{
+    width: 90px;
+    height: 90px;
+    background-size: cover;
+}
+
+.pull-right{
+    vertical-align: middle;
+}
+
+img.bg {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -100;
+    opacity: 0.5;
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+    img.bg {
+        left: 50%;
+        margin-left: -512px;   /* 50% */
+    }
+}
+
+.login-register{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.home-info{
+    margin-left: 50px;
+    margin-right: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    padding-bottom: 15px;
+}
+
+

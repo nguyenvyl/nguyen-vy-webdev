@@ -1,32 +1,103 @@
-<nav class="navbar navbar-default navbar-fixed-top blue">
-    <div class="container-fluid">
-        <div class="navbar-brand whiteIcon">
-            <b class="whiteIcon">&nbsp Profile</b></div>
-        <div class="navbar-brand pull-right whiteIcon">
-            <a ng-click="model.updateUser()" type="button" class="glyphicon glyphicon-ok whiteIcon"></a>
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top hidden-xs">
+        <a href="#/home">
+            <h3 class="navbar-text v-center" id="nav-header">
+                <i class="fa fa-tree" aria-hidden="true"></i>
+                Hike Buddy
+            </h3>
+        </a>
+        <div class="pull-right btn-toolbar">
+            <h4 class="navbar-text v-center hidden-sm hidden-xs">Welcome {{model.user.firstName}} {{model.user.lastName}}!</h4>
+            <a href="#/user/{{model.user._id}}" type="button" class="btn btn-default navbar-btn fa fa-user">
+                <span class="header-text">&nbsp Profile</span>
+            </a>
+            <a href="#/search/{{model.user._id}}" type="button" class="btn btn-default navbar-btn fa fa-search">
+                <span class="header-text">&nbsp Search Trails</span>
+            </a>
+            <a href="#/user/{{model.user._id}}/favorites" type="button" class="btn btn-default navbar-btn fa fa-star">
+                <span class="header-text">&nbsp Favorites</span>
+            </a>
         </div>
-    </div>
-</nav>
-<div class="container-fluid">
-    <form>
-        <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
-        <label for="username">Username</label>
-        <input ng-model="model.user.username" id="username" type="text" class="form-control" placeholder="Username">
-        <label for="email">Email</label>
-        <input ng-model="model.user.email" id="email" type="email" placeholder="my_email@email.com" class="form-control">
-        <label for="firstname">First Name</label>
-        <input ng-model="model.user.firstName" id="firstname" type="text" placeholder="First Name" class="form-control">
-        <label for="lastname">Last Name</label>
-        <input ng-model="model.user.lastName" id="lastname" type="text" placeholder="Last Name" name="lastname" class="form-control">
-    </form>
-    <a href="#/user/{{model.user._id}}/website" type="button" class="btn btn-primary btn-block">Websites</a>
-    <a ng-click="model.logout()" type="button" class="btn btn-danger btn-block">Logout</a>
-    <a class="btn btn-warning btn-block" ng-click="model.deleteUser()">Delete Account</a>
+    </nav>
 </div>
-<nav class="navbar navbar-default navbar-fixed-bottom blue">
-    <div class="container-fluid">
-        <div class="navbar-brand pull-right">
-            <a href="#/user/{{model.user._id}}" class="glyphicon glyphicon-user whiteIcon"></a>
+
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg hidden-sm">
+        <div class="btn-toolbar">
+            <div class="pull-left">
+                <a href="#/home" type="button" class="btn btn-default navbar-btn fa fa-home"></a>
+            </div>
+            <div class="pull-right">
+                <a href="#/user/{{model.user._id}}" type="button" class="btn btn-default navbar-btn fa fa-user"></a>
+                <a href="#/search/{{model.user._id}}" type="button" class="btn btn-default navbar-btn fa fa-search"></a>
+                <a href="#/user/{{model.user._id}}/favorites" type="button" class="btn btn-default navbar-btn fa fa-star"></a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
+<div class="container-fluid">
+    <h1 class="header-text h-center">Edit Your Profile</h1>
+    <br>
+    <div class="container-fluid col-sm-4">
+        <img ng-src="{{model.user.picture}}" class="img-responsive img-thumbnail ">
+        <form action="/api/upload"  method="post" enctype="multipart/form-data" class="body-text">
+            <input  name="myFile"   type="file" class="form-control"/>
+            <input  name="user" value="{{model.user}}"   style="display: none"/>
+            <button type="submit"   class="btn btn-block btn-primary">Upload New Profile Picture</button>
+        </form>
+    </div>
+    <div class="container-fluid col-sm-8 body-text">
+        <form>
+            <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
+            <label for="username">Username</label>
+            <input ng-model="model.user.username" id="username" type="text" class="form-control" placeholder="Username">
+            <label for="email">Email</label>
+            <input ng-model="model.user.email" id="email" type="email" placeholder="my_email@email.com" class="form-control">
+            <label for="firstname">First Name</label>
+            <input ng-model="model.user.firstName" id="firstname" type="text" placeholder="First Name" class="form-control">
+            <label for="lastname">Last Name</label>
+            <input ng-model="model.user.lastName" id="lastname" type="text" placeholder="Last Name" name="lastname" class="form-control">
+            <label for="description">About Me</label>
+            <input ng-model="model.user.description" id="description" type="text" placeholder="Tell us a little about yourself!" class="form-control">
+            <br>
+            <button ng-click="model.updateUser()" type="button"  class="btn btn-block btn-primary">Update Profile</button>
+            <div ng-show="model.updateAlert" class="alert alert-success" role="alert">{{model.updateAlert}}</div>
+        </form>
+    </div>
+</div>
+<br>
+    <div class="container-fluid" class="col-xs-12">
+        <h2 class="header-text h-center">Other Options</h2>
+        <br>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="body-text">See how your profile looks to other users.</div>
+            </div>
+            <div class="col-xs-8">
+                <a href="#/user/{{model.user._id}}/viewprofile/{{model.user._id}}" type="button" class="btn btn-primary btn-block body-text">View Public Profile</a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="body-text">Log out of your account.</div>
+            </div>
+            <div class="col-xs-8">
+                <a ng-click="model.logout()" type="button" class="btn btn-danger btn-block body-text ">Logout</a>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="body-text">Delete your account. This cannot be undone!</div>
+            </div>
+            <div class="col-xs-8">
+                <a class="btn btn-warning btn-block body-text " ng-click="model.deleteUser()">Delete Account</a>
+            </div>
         </div>
     </div>
-</nav>
+<br>
+<br>
+

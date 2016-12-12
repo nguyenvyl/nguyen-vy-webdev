@@ -1,3 +1,16 @@
-/**
- * Created by nguyenvyl on 12/7/16.
- */
+(function() {
+    angular
+        .module("WebDevProject")
+        .directive('backImg', function(){
+        return function(scope, element, attrs){
+            var url = attrs.backImg;
+            element.css({
+                'background-image': 'url(' + url +')',
+                'background-size' : 'cover',
+                'width': '60px',
+                'height': '60px'
+            });
+        };
+    });
+
+})();

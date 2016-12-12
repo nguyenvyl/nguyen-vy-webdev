@@ -1,8 +1,12 @@
+
+
 body {
     padding: 50px 0;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     margin-top: 30px;
 }
+
+
 
 h1{
     padding-bottom: 7px;
@@ -146,3 +150,93 @@ textarea.form-control{
     width: 15px; /*Desired width*/
     height: 15px; /*Desired height*/
 }
+
+.nav-home-tab{
+   border-bottom-color: white;
+   border-bottom-width: thick;
+}
+
+#nav-header{
+    font-size: large;
+}
+
+.open-sans{
+    font-family: 'Open Sans', sans-serif;
+    font-size: medium;
+}
+
+.open-sans.small{
+    font-size: small;
+}
+
+.ubuntu{
+    font-family: 'Ubuntu', sans-serif;
+    line-height: 1.5em;
+}
+
+.home-container{
+    padding: 0px 50px 50px 50px;
+}
+
+
+.pic-30{
+    width: 30%;
+    height: auto;
+}
+
+.pic-60{
+    width: 60%;
+    height: auto;
+}
+
+.row.project-row{
+    margin-bottom: 50px;
+}
+
+.v-center{
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+
+
+/*.cross-fade {*/
+    /*position:relative;*/
+    /*!*height:281px;*!*/
+    /*!*width:450px;*!*/
+    /*margin:0 auto;*/
+/*}*/
+
+/*.cross-fade img {*/
+    /*position:absolute;*/
+    /*left:0;*/
+    /*-webkit-transition: opacity 1s ease-in-out;*/
+    /*-moz-transition: opacity 1s ease-in-out;*/
+    /*-o-transition: opacity 1s ease-in-out;*/
+    /*transition: opacity 1s ease-in-out;*/
+/*}*/
+
+/*.corss- img.top:hover {*/
+    /*opacity:0;*/
+/*}*/
+
+.image-button{
+    position: relative;
+    width: 100%;
+    text-align: -webkit-center;
+}
+
+.fade{
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+.fade:hover {
+    opacity: 0.8;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+

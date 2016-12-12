@@ -1,7 +1,5 @@
 module.exports=function(mongoose){
 
-    var websiteSchema = require("./website.schema.server.js")(mongoose);
-
     var userSchema = mongoose.Schema({
         username: String,
         password: String,
@@ -9,16 +7,23 @@ module.exports=function(mongoose){
         lastName: String,
         email: String,
         phone: String,
-        //websites: [websiteSchema],
-        _websites:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Website'
-        }],
+
         dateCreated: {type: Date, default: Date.now},
+        picture: String,
+        friends: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'ProjectUser'
+        }],
+        trails: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Trail'
+        }],
         facebook: {
             id:    String,
             token: String
-        }
+        },
+        description: String,
+        visibleToPublic: Boolean
     });
 
     return userSchema;

@@ -1,0 +1,52 @@
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top hidden-xs">
+        <a href="#/home">
+            <h3 class="navbar-text v-center" id="nav-header">
+                <i class="fa fa-tree" aria-hidden="true"></i>
+                Hike Buddy
+            </h3>
+        </a>
+        <div class="pull-right btn-toolbar">
+            <h4 class="navbar-text v-center hidden-sm hidden-xs">Welcome {{model.currentUser.firstName}} {{model.currentUser.lastName}}!</h4>
+            <a href="#/user/{{model.currentUser._id}}" type="button" class="btn btn-default navbar-btn fa fa-user">
+                <span class="header-text">&nbsp Profile</span>
+            </a>
+            <a href="#/search/{{model.currentUser._id}}" type="button" class="btn btn-default navbar-btn fa fa-search">
+                <span class="header-text">&nbsp Search Trails</span>
+            </a>
+            <a href="#/user/{{model.currentUser._id}}/favorites" type="button" class="btn btn-default navbar-btn fa fa-star">
+                <span class="header-text">&nbsp Favorites</span>
+            </a>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg hidden-sm">
+        <div class="btn-toolbar">
+            <div class="pull-left">
+                <a href="#/home" type="button" class="btn btn-default navbar-btn fa fa-home"></a>
+            </div>
+            <div class="pull-right">
+                <a href="#/user/{{model.currentUser._id}}" type="button" class="btn btn-default navbar-btn fa fa-user"></a>
+                <a href="#/search/{{model.currentUser._id}}" type="button" class="btn btn-default navbar-btn fa fa-search"></a>
+                <a href="#/user/{{model.currentUser._id}}/favorites" type="button" class="btn btn-default navbar-btn fa fa-star"></a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+    <h1 class="header-text h-center">My Favorited Trails</h1>
+    <div ng-show="model.alert" class="alert alert-info body-text" role="alert">{{model.alert}}</div>
+    <div ng-repeat="trail in model.trails" class="body-text">
+        <div class="clearfix" ng-if="$index % 4 == 0"></div>
+        <div class="col-sm-3">
+            <h3>
+                <a href="#/user/{{model.currentUser._id}}/trail/{{trail._id}}">{{trail.name}}</a>
+            </h3>
+        </div>
+    </div>
+</div>
+
+

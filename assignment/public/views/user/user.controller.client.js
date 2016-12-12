@@ -60,13 +60,13 @@
                         return;
                     }
                     else{
-                        console.log("We're going to try to log this user in: ");
-                        console.log(user);
+                        // console.log("We're going to try to log this user in: ");
+                        // console.log(user);
                         UserService
                             .login(user)
                             .then(function(response){
-                                console.log("Register controller tried to log in and here's what we got: ");
-                                console.log(response);
+                                // console.log("Register controller tried to log in and here's what we got: ");
+                                // console.log(response);
                                 if(response.data) {
                                     UserService.setCurrentUser(response.data);
                                     var user = response.data;

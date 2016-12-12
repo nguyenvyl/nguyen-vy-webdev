@@ -49,12 +49,12 @@ module.exports = function(app, UserModel) {
     }
 
     function localStrategy(username, password, done) {
+
         UserModel
             .findUserByUsername(username)
             .then(
                 function(user) {
                     if(user.username === username && bcrypt.compareSync(password, user.password)) {
-                        // console.log("User found!");
                         return done(null, user);
                     } else {
                         return done(null, false, {message: 'User not found!'});
@@ -113,6 +113,7 @@ module.exports = function(app, UserModel) {
     }
 
     function findUserByUsername(req, res){
+        console.log("find user by username");
         var username = req.query.username;
         UserModel
             .findUserByUsername(username)
@@ -151,7 +152,7 @@ module.exports = function(app, UserModel) {
     }
 
     function createUser(req, res){
-        // console.log("Time to create a user! --user.service.server");
+        console.log("Time to create a user! --user.service.server");
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
 
@@ -207,7 +208,9 @@ module.exports = function(app, UserModel) {
    }
 
     function login(req, res) {
+        console.log("Hello from login- server");
         var user = req.user;
+        console.log(user);
         if (user != null){
             delete user.password;
             res.json(user);
@@ -224,17 +227,21 @@ module.exports = function(app, UserModel) {
     }
 
     function register (req, res) {
+        console.log("Hello from register");
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
         UserModel
             .createUser(user)
             .then(
                 function(user){
+                    console.log(user);
                     if(user){
                         req.login(user, function(err) {
                             if(err) {
                                 res.status(400).send(err);
                             } else {
+                                console.log("Login result from register - server");
+                                console.log(user);
                                 res.json(user);
                             }
                         });

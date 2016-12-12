@@ -1,4 +1,3 @@
-
 (function() {
     angular
         .module("WebAppMaker")
@@ -52,14 +51,17 @@
             .when("/home", {
                 templateUrl: "home.html"
             })
+            .when("/home/about",{
+                templateUrl: "views/home/about.view.html"
+            })
+            .when("/home/projects",{
+                templateUrl: "views/home/projects.view.html"
+            })
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
                 controller: "LoginController",
                 controllerAs: "model"
             })
-            // .when("/user", {
-            //     redirectTo: "/user/:uid"
-            // })
             .when("/user/:uid", {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",

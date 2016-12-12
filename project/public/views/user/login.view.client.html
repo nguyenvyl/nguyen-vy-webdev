@@ -1,15 +1,34 @@
-    <div class="container-fluid">
-      <h1>Login</h1>
-      <form>
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <a href="#/home" class="hidden-xs">
+            <h3 class="navbar-text v-center" id="nav-header">
+                <i class="fa fa-tree" aria-hidden="true"></i>
+                Hike Buddy
+            </h3>
+        </a>
+        <div class="pull-right btn-toolbar">
+            <a href="#/home" type="button" class="btn btn-default navbar-btn">Home</a>
+            <a href="#/about" type="button" class="btn btn-default navbar-btn">About</a>
+            <a href="#/login" type="button" class="btn btn-default navbar-btn">Login</a>
+        </div>
+    </nav>
+</div>
+
+<img src="../../images/DSC_8370.jpg" class="bg">
+
+<div class="container-fluid login-register">
+    <h1 class="header-text">Login To Hike Buddy</h1>
+    <form class="body-text">
         <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
         <input ng-model="model.user.username" type="text" placeholder="username" class="form-control"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <input ng-model="model.user.password" type="password" placeholder="password" class="form-control"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <br>
         <a ng-click="model.login()" class="btn btn-primary btn-block">Login</a>
         <a href="/auth/facebook" class="btn btn-primary btn-block">
               <span class="fa fa-facebook"></span>
-              Facebook
+              Login With Facebook
         </a>
         <a href="#/register" type="button" class="btn btn-success btn-block">Register</a>
       </form>

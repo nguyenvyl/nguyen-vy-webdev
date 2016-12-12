@@ -1,14 +1,13 @@
 (function(){
     angular
-        .module("WebAppMaker")
+        .module("WebDevProject")
         .controller("LoginController", LoginController)
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, $rootScope, UserService) {
+    function LoginController($location, $rootScope, ProjectUserClient) {
         var vm = this;
         vm.login = login;
-
 
         function login() {
 
@@ -16,16 +15,14 @@
                 vm.alert = "Please provide both a username and password.";
             }
 
-            UserService
+            ProjectUserClient
                 .login({
                     username: vm.user.username,
                     password: vm.user.password
                 })
                 .then(function(response){
-                    // console.log("Login user controller received this response: ");
-                    // console.log(response);
                     if(response.data) {
-                        UserService.setCurrentUser(response.data);
+                        ProjectUserClient.setCurrentUser(response.data);
                         var user = response.data;
                         $location.url("/user/"+user._id);
                     }
@@ -36,12 +33,12 @@
     }
 
 
-    function RegisterController($location, $rootScope, UserService) {
+    function RegisterController($location, $rootScope, ProjectUserClient) {
         var vm = this;
         vm.register = register;
 
-        function register(username, password1, password2){
-            if(!username || !password1 || !password2){
+        function register(username, email, password1, password2){
+            if(!username || !password1 || !password2 || !email){
                 vm.alert = "Please fill in all fields to register.";
                 return;
             }
@@ -51,8 +48,15 @@
                 return;
             }
 
-            UserService
-                .createUser(username, password1)
+            var newUser = {
+                username: username,
+                password: password1,
+                email: email,
+                picture: '../../../images/default.png'
+            };
+
+            ProjectUserClient
+                .createUser(newUser)
                 .success(function(user){
                     console.log(user);
                     if(user === 'User exists'){
@@ -60,20 +64,17 @@
                         return;
                     }
                     else{
-                        console.log("We're going to try to log this user in: ");
-                        console.log(user);
-                        UserService
-                            .login(user)
+                        ProjectUserClient
+                            .login(newUser)
                             .then(function(response){
                                 console.log("Register controller tried to log in and here's what we got: ");
                                 console.log(response);
                                 if(response.data) {
-                                    UserService.setCurrentUser(response.data);
+                                    ProjectUserClient.setCurrentUser(response.data);
                                     var user = response.data;
                                     $location.url("/user/"+user._id);
                                 }
                             });
-                        $location.url("/user/" + user._id);
                     }
                 })
                 .error(function(){
@@ -82,8 +83,9 @@
         }
     }
 
-    function ProfileController($location, $routeParams, UserService) {
+    function ProfileController($location, $routeParams, $rootScope, ProjectUserClient) {
 
+        console.log("Hello from profile controller");
         var vm = this;
         var userId = $routeParams.uid;
         vm.updateUser = updateUser;
@@ -91,12 +93,12 @@
         vm.logout = logout;
 
         function init(){
-            var promise = UserService.findUserById(userId);
+            var promise = ProjectUserClient.findUserById(userId);
             promise
                 .success(function(user){
                     if(user != '0'){
                         vm.user = user;
-
+                        getTrailList(user);
                     }
                 })
                 .error(function(){
@@ -105,13 +107,34 @@
         }
         init();
 
+        function getTrailList(user){
+            // var trailIds = user.trails;
+            ProjectUserClient
+                .getTrailList(user)
+                .then(function(response){
+                    // console.log(response.data.trails[0]);
+                    vm.trails = response.data.trails;
+                    // console.log(vm.trails);
+                })
+        }
 
         function updateUser(){
-            UserService.updateUser(vm.user);
+            ProjectUserClient
+                .updateUser(vm.user)
+                .then(function(retVal){
+                    // console.log(err);
+                    console.log(retVal);
+                    if(retVal){
+                        vm.updateAlert = "Your profile has been updated!"
+                    }
+                    else{
+                        vm.updateAlert = "Due to server issues, your profile was not able to be updated. Sorry!"
+                    }
+                })
         }
 
         function deleteUser(){
-            UserService
+            ProjectUserClient
                 .deleteUser(vm.user._id)
                 .success(function(){
                     $location.url("/login");
@@ -122,11 +145,11 @@
         }
 
         function logout() {
-            UserService
+            ProjectUserClient
                 .logout()
                 .then(
                     function(response) {
-                        UserService.setCurrentUser(null);
+                        ProjectUserClient.setCurrentUser(null);
                         $location.url("/login");
                     });
         }

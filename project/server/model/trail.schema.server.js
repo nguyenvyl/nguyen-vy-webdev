@@ -1,29 +1,25 @@
 module.exports=function(mongoose){
 
-    // var websiteSchema = require("./website.schema.server.js")(mongoose);
-
-    var userSchema = mongoose.Schema({
-        username: String,
-        password: String,
-        firstName: String,
-        lastName: String,
-        email: String,
-        phone: String,
+    var trailSchema = mongoose.Schema({
+        name: String,
+        city: String,
+        state: String,
+        country: String,
+        lat: Number,
+        lon: Number,
+        description: String,
+        directions: String,
+        unique_id : Number,
+        activities: Object,
 
         dateCreated: {type: Date, default: Date.now},
-        picture: String,
-        friends: [{
+
+        users: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-        trails: [String],
-        facebook: {
-            id:    String,
-            token: String
-        },
-        description: String,
-        visibleToPublic: Boolean
+            ref: 'ProjectUser'
+        }]
+
     });
 
-    return userSchema;
+    return trailSchema;
 };

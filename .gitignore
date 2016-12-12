@@ -2,6 +2,7 @@ node_modules/
 .elasticbeanstalk/
 .ebextensions
 .idea/
+./idea/workspace.xml
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

@@ -1,5 +1,4 @@
 (function (){ // IIFE
     angular
-        .module("WebDevProject", ["ngRoute"]);
-
+        .module("WebDevProject", ["ngRoute", "ngSanitize", "ngMap"]);
 })();

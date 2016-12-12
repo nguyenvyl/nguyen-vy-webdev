@@ -1,15 +1,45 @@
+<div class="container-fluid header-text">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <a href="#/home" class="hidden-xs">
+            <h3 class="navbar-text v-center" id="nav-header">
+                <i class="fa fa-tree" aria-hidden="true"></i>
+                Hike Buddy
+            </h3>
+        </a>
+        <div class="pull-right btn-toolbar">
+            <a href="#/home" type="button" class="btn btn-default navbar-btn">Home</a>
+            <a href="#/about" type="button" class="btn btn-default navbar-btn">About</a>
+            <a href="#/login" type="button" class="btn btn-default navbar-btn">Login</a>
+        </div>
+    </nav>
+</div>
 
-    <div class="container-fluid">
-      <h1>Register</h1>
+<!--<div class="container-fluid col-md-6">-->
+    <!--<div class="row">-->
+        <!--<h2 class="header-text">Register for access to thousands of trails.</h2>-->
+            <!--<img src="../../images/royal_gorge.jpg" class="img-responsive">-->
+            <!--<img src="../../images/rockies.jpg" class="img-responsive">-->
+            <!--<img src="../../images/field.jpg" class="img-responsive">-->
+    <!--</div>-->
+
+<!--</div>-->
+
+<img src="../../images/DSC_0800.jpg" class="bg">
+
+<div class="container-fluid login-register">
+      <h1 class="header-text">Register</h1>
         <div ng-show="model.alert" class="alert alert-danger" role="alert">{{model.alert}}</div>
-      <form>
+      <form class="body-text">
         <input ng-model="model.user.username" id="username" type="text" placeholder="username" class="form-control"
+               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        <input ng-model="model.user.email" id="email" type="email" placeholder="email" class="form-control"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <input ng-model="model.user.password1" id="password" type="password" placeholder="password"  class="form-control"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <input ng-model="model.user.password2" id="verifypw" type="password" placeholder="verify password" class="form-control"
                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <a ng-click="model.register(model.user.username, model.user.password1, model.user.password2)" type="button" class="btn btn-primary btn-block">Register</a>
+          <br>
+          <a ng-click="model.register(model.user.username, model.user.email, model.user.password1, model.user.password2)" type="button" class="btn btn-primary btn-block">Register</a>
           <a href="#/login" type="button" class="btn btn-danger btn-block">Cancel</a>
       </form>
     </div>

@@ -1,18 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../stylesheets/style.css">
-  </head>
-  <body>
-    <div class="container-fluid">
-      <div class="jumbotron">
-        <h1>Welcome to Vy's site!</h1>
-        <p>This is the portal to my web development projects for class CS5610.</p>
-        <br>
-        <a href="https://github.com/nguyenvyl/nguyen-vy-webdev" class="btn-block btn-primary btn-lg">Github</a>
-        <br>
-        <a href="#/login" class="btn-block btn-primary btn-lg">Assignment Login Page</a>
+<head>
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="../stylesheets/style.css">-->
+    <!--<meta id="meta", name="viewport", content="width=device-width", initial-scale="1.0", user-scalable="no">-->
+
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top ubuntu">
+        <span class="navbar-text v-center" id="nav-header">The Website of Vy Nguyen</span>
+        <ul class="nav nav-pills pull-right ">
+            <li><a href="#1">Home</a></li>
+            <li><a href="#/home/about">About</a></li>
+            <li><a href="#/home/projects">Projects</a></li>
+            <li><a href="https://www.linkedin.com/in/vylnguyen" class="fa fa-linkedin" aria-hidden="true"></a></li>
+            <li><a href="https://github.com/nguyenvyl" class="fa fa-github" aria-hidden="true"></a></li>
+            <li><a href="https://ithinkincomics.com/" class="fa fa-wordpress" aria-hidden="true"></a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container-fluid home-container">
+    <div class="row">
+        <div class="jumbotron col-xs-12">
+            <h1 class="text-center ubuntu"><strong>Welcome!</strong></h1>
+            <h2 class="text-center ubuntu">I'm Vy Nguyen - avid photographer, chronic doodler, world traveler, and aspiring developer.</h2>
         </div>
-  </body>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-xs-6">
+            <a href="#/home/about">
+                <div class="image-button">
+                    <img class="img-responsive center-block img-circle fade" src="/images/photographer.jpg">
+                    <h1><span class="ubuntu">About</span></h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 col-xs-6">
+            <a href="#/home/projects">
+                <div class="image-button">
+                    <img class="img-responsive center-block img-circle fade" src="/images/seattle_square.png">
+                    <h1><span class="ubuntu">Projects</span></h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 col-xs-6">
+            <a href="https://ithinkincomics.com/">
+                <div class="image-button">
+                    <img class="img-responsive center-block img-circle fade" src="/images/art-ireland.jpg">
+                    <h1><span class="ubuntu">Comic Blog</span></h1>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 col-xs-6">
+            <a href="https://www.instagram.com/ithinkincomics/">
+                <div class="image-button">
+                    <img class="img-responsive center-block img-circle fade" src="/images/cinque-terre.jpg">
+                    <h1><span class="ubuntu">Photography</span></h1>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+</body>
 </html>

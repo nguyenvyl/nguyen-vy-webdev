@@ -1,21 +1,16 @@
 (function() {
     angular
-        .module("WebAppMaker")
-        .factory("UserService", UserService);
-    function UserService($http, $rootScope) {
+        .module("WebDevProject")
+        .factory("ProjectUserClient", ProjectUserClient);
+    function ProjectUserClient($http, $rootScope) {
 
         var api;
 
-        function createUser(username, password) {
-            var newUser = {
-                username: username,
-                password: password
-            };
-            return $http.post('/api/user', newUser);
+        function createUser(user) {
+            return $http.post('/api/user', user);
         }
 
         function findUserById(id) {
-            console.log("Hello from find user by id-- client");
             var url = '/api/user/' + id;
             return $http.get(url);
         }
@@ -46,7 +41,6 @@
         }
 
         function logout() {
-            console.log("Hello from logout - user client");
             return $http.post("/api/logout");
         }
 
@@ -60,6 +54,12 @@
 
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
+
+        }
+
+        function getTrailList(user){
+            // console.log("Get trail list - client");
+            return $http.put("/api/getTrailList", user);
         }
 
         api = {
@@ -73,7 +73,8 @@
             logout                : logout,
             register              : register,
             loggedIn              : loggedIn,
-            setCurrentUser        : setCurrentUser
+            setCurrentUser        : setCurrentUser,
+            getTrailList          : getTrailList
         };
         return api;
     }

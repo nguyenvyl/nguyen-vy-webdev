@@ -1,15 +1,14 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-//var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy;
 var bcrypt = require("bcrypt-nodejs");
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var unirest = require('unirest');
 
 
-module.exports = function(app, UserModel) {
-
+module.exports = function(app, UserModel, TrailModel) {
+    console.log("Hello from user.service.server.js");
     var facebookConfig = {
         clientID     : process.env.FACEBOOK_CLIENT_ID,
         clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
@@ -55,7 +54,6 @@ module.exports = function(app, UserModel) {
             .then(
                 function(user) {
                     if(user.username === username && bcrypt.compareSync(password, user.password)) {
-                        // console.log("User found!");
                         return done(null, user);
                     } else {
                         return done(null, false, {message: 'User not found!'});
@@ -153,7 +151,7 @@ module.exports = function(app, UserModel) {
     }
 
     function createUser(req, res){
-        // console.log("Time to create a user! --user.service.server");
+        console.log("Time to create a user! --user.service.server");
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
 
@@ -167,6 +165,7 @@ module.exports = function(app, UserModel) {
                         .createUser(user)
                         .then(function (retVal) {
                                 if (retVal != null) {
+                                    console.log("Hello, our user was created!");
                                     res.send(retVal);
                                 }
                             },
@@ -220,7 +219,6 @@ module.exports = function(app, UserModel) {
     }
 
     function logout(req, res) {
-        // console.log("Hello from logout");
         req.logOut();
         res.sendStatus(200);
     }
@@ -249,29 +247,56 @@ module.exports = function(app, UserModel) {
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
+    // Takes the user's list of trail IDs and returns a list of the full trail objects.
     function getTrailList(req, res) {
-        console.log("Hello from getTrailList - server");
-        // console.log(req.body);
+        var user = req.body;
+        UserModel
+            .getTrailList(user)
+            .then(
+                function(retVal){
+                   // console.log(retVal);
+                   res.send(retVal);
+                }
+            );
+    }
 
-        var trailIds = req.body.trails;
-        var resultTrails = [];
+    var multer = require('multer'); // npm install multer --save
+    var upload = multer({ dest: __dirname+'/../../public/uploads' });
 
-        for(t in trailIds){
-            var url = 'https://trailapi-trailapi.p.mashape.com/?unique_id=' + trailIds[t];
-            unirest.get(url)
-                .header("X-Mashape-Key", "1qo8s7goIcmshmLvARBEqmmVWkmpp12rej1jsn4ut2EvqOy17u")
-                .header("Accept", "text/plain")
-                .end(function (result) {
-                    // console.log(result.status, result.headers, result.body);
-                    // console.log(result.body);
-                    resultTrails.push(result.body);
-                    // res.send(result.body);
-                });
+    function uploadImage(req, res) {
+        var user = JSON.parse(req.body.user);
+        var myFile = req.file;
+        if(!myFile){
+            res.redirect("/#/user/"+ user._id);
+            return;
         }
-        console.log(resultTrails);
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        var extension = originalname.split('.').pop();
+        var relPath = "/../../uploads/" + filename;
+        var uid = user._id;
+        user.picture = relPath;
+        UserModel
+            .updateUser(uid, user)
+            .then(function (retVal) {
+                    if (retVal != null) {
+                        // res.send(retVal);
+                        res.redirect("/#/user/"+ user._id);
+                    }
+                },
+                function(err){
+                    res.sendStatus(400).send(err);
+                });
 
     }
 
+    app.post("/api/upload", upload.single('myFile'), uploadImage);
     app.put('/api/getTrailList', getTrailList);
     app.get ('/api/loggedin', loggedin);
     app.get('/api/user', findUser);

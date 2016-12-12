@@ -1,84 +1,10 @@
-// var express = require('express');
-// var path = require('path');
-// //var favicon = require('serve-favicon');
-// var logger = require('morgan');
-// var cookieParser = require('cookie-parser');
-// var bodyParser = require('body-parser');
-//
-// //var routes = require('./routes/index');
-// //var users = require('./routes/users');
-//
-// var app = express();
-//
-// // view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// //app.set('view engine', 'jade');
-//
-// // uncomment after placing your favicon in /public
-// //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// //app.use(favicon(__dirname + '/public/favicon.ico'));
-// app.use(logger('dev'));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-//
-//
-// require("./test/app.js")(app);
-//
-//
-// app.get('/', function(req, res){
-//   res.render('index.html');
-// });
-//
-// require("./assignment/app.js")(app);
-//
-// module.exports = function(app) {
-//   require("./services/user.service.server.js")(app);
-//   // require("./services/website.service.server.js")(app);
-//   // require("./services/page.service.server.js")(app);
-//   // require("./services/widget.service.server.js")(app);
-// };
-//
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-//
-// // error handlers
-//
-// // development error handler
-// // will print stacktrace
-// if (app.get('env') === 'development') {
-//   app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//       message: err.message,
-//       error: err
-//     });
-//   });
-// }
-//
-// // production error handler
-// // no stacktraces leaked to user
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.render('error', {
-//     message: err.message,
-//     error: {}
-//   });
-// });
-//
-//
-// module.exports = app;
-
 module.exports = function(app, mongoose, db) {
 
     console.log("Hello from project/app.js");
 
     var connectionString = 'mongodb://testuser:testuser@ds033106.mlab.com:33106/nguyenvyl_webdev';
+
+    // var connectionString = 'mongodb://localhost:5000/webdevproject';
 
     var mongoose = require("mongoose");
     var db =  mongoose.connect(connectionString);
@@ -96,5 +22,18 @@ module.exports = function(app, mongoose, db) {
     db_connection.on('disconnected', function(){
         console.log("project app Mongo DB disconnected!");
     });
+
+
+    // Setting up dependencies for the user database
+    var userSchema = require("./server/model/user.schema.server.js")(mongoose);
+    var trailSchema = require("./server/model/trail.schema.server.js")(mongoose);
+    var TrailMongooseModel = mongoose.model("Trail", trailSchema);
+    var UserMongooseModel = mongoose.model("ProjectUser", userSchema);
+    var UserModel = require('./server/model/user.model.server.js')(mongoose, db, UserMongooseModel, TrailMongooseModel);
+    var TrailModel = require('./server/model/trail.model.server.js')(mongoose, db, TrailMongooseModel, UserModel);
+
+    require('./server/services/user.service.server.js')(app, UserModel, TrailModel);
+    require('./server/services/trail.service.server.js')(app, TrailModel, UserModel);
+
 
 };

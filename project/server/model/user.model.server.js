@@ -2,12 +2,9 @@
 
 var q = require("q");
 
-// var require("./website.model.server.js")();
 
-module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
-
+module.exports=function(mongoose, db, UserMongooseModel, TrailMongooseModel){
     var api;
-
     //insert user into mongodb using q
     function createUser(user){
         var deferred = q.defer();
@@ -17,7 +14,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
             }
             else{
                 deferred.resolve(retVal);
-                console.log(retVal);
             }
         });
         return deferred.promise;
@@ -58,7 +54,6 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
             deferred.reject(err);
         }
         else{
-            console.log("User updated!");
             deferred.resolve(retVal);
         }
     });
@@ -67,28 +62,60 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
     }
 
     function deleteUser(id) {
-
-        // Delete all the user's websites.
-        WebsiteModel
-            .findAllWebsitesForUser(id)
-            .then(function (websites) {
-                console.log(websites);
-                if (websites != null) {
-                    var w;
-                    for (w in websites) {
-                        WebsiteModel.deleteWebsite(websites[w]._id);
+        var deferred = q.defer();
+        UserMongooseModel
+            .findById(id)
+            .populate('trails')
+            .exec (function(err, user){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    var stringtrails = JSON.stringify(user.trails);
+                    var trails = JSON.parse(stringtrails);
+                    var t;
+                    // For every trail
+                    for(t in trails){
+                        var u;
+                        // Check the trail's list of users for our user
+                        for(u = 1; u < trails[t].users.length; u++){
+                            if(trails[t].users[u] == user._id){
+                                // Delete the user from that trail
+                                trails[t].users.splice(u, 1);
+                                break;
+                            }
+                        }
+                        if(trails[t].users.length == 0){
+                            TrailMongooseModel
+                                .remove({_id: trails[t]._id}, function (err, retVal) {
+                                    if (err) {
+                                        deferred.reject(err);
+                                    }
+                                    else {
+                                    }
+                                });
+                        }
+                        else{
+                            TrailMongooseModel
+                                .update({_id: trails[t]._id},{$set: trails[t]}, function(err, retVal){
+                                if (err) {
+                                    deferred.reject(err);
+                                }
+                                else{
+                                }
+                                });
+                        }
                     }
                 }
             });
 
-        // Delete the user.
-        var deferred = q.defer();
         UserMongooseModel.remove({_id: id}, function (err, retVal) {
             if (err) {
                 deferred.reject(err);
             }
             else {
                 deferred.resolve(retVal);
+
             }
         });
         return deferred.promise;
@@ -96,14 +123,12 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
 
 
     function findUserByUsername(username){
-        // console.log("Hello from find user by username");
         var deferred = q.defer();
         UserMongooseModel.findOne({username: username}, function(err, retVal){
             if (err) {
                 deferred.reject(err);
             }
             else{
-                // console.log(retVal);
                 deferred.resolve(retVal);
             }
         });
@@ -121,9 +146,7 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
                     deferred.reject(err);
                 }
                 else{
-                    console.log("User found!");
                     deferred.resolve(retVal);
-                    console.log(retVal);
                 }
             });
         return deferred.promise;
@@ -143,6 +166,23 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
         return deferred.promise;
     }
 
+    function getTrailList(user){
+        var deferred = q.defer();
+        UserMongooseModel
+            .findById(user._id)
+            .populate('trails')
+            .exec (function(err, retVal){
+                if(err){
+                    deferred.reject(err);
+                }
+                else{
+                    deferred.resolve(retVal);
+                }
+            });
+        return deferred.promise;
+    }
+
+
     api = {
         createUser: createUser,
         findAllUsers: findAllUsers,
@@ -151,7 +191,8 @@ module.exports=function(mongoose, db, UserMongooseModel, WebsiteModel){
         deleteUser: deleteUser,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
-        findUserByFacebookId: findUserByFacebookId
+        findUserByFacebookId: findUserByFacebookId,
+        getTrailList: getTrailList
     };
     return api;
 };
