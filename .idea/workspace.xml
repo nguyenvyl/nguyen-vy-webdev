@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57eaa9cd-a2ee-4d71-a2ed-42157a79c9b3" name="Default" comment="Many changes&#10;">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/1c828136cfb0b1054a9acd4e8c7e13fa" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/1ff0c19ffba5f7c2efdb99f2fd2d689c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/24c5e5f58ced682b6e0ce0257f88b875" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/3a142bac6888593c56ef54f3f79c2227" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/43660fc8686b5a87722cdea0128ce91e" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/5ba8c18fecf8d5b7b8f27c076028be42" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/7e4edd3e6a0d5c4f5d933b0f2286b121" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/8b1789a100aafaf97c37126c78a892e1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/a17553597716db090c6c9f99311a5b56" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/a1a8d5329993d6a2da63786bd6ec5895" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/a20fc0048b7c411acfd5dc9342115fd2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/b2632c63794e7cdb7d72de7e41206bc0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/c30dc1f8d0d32436ede1894180d3f683" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/c9a4b58fce44da87b58d3eb04414f8ad" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/d8a79b9b0440296aab2a6155d17a7167" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/e34c64d154fa2eef264d16a327e2d029" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/e3c227d4371766745e65ae4f8f0c28e6" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/ef1d28d6d81dff156c3e4333e6d71c66" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/project/public/uploads/f92589fb336b195c1311e5c51064ad13" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assignment/public/views/home/projects.view.html" afterPath="$PROJECT_DIR$/assignment/public/views/home/projects.view.html" />
     </list>
     <ignored path="nguyen-vy-webdev.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -123,7 +106,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project_server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="project_server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project_server.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
@@ -133,11 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.model.server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/project/server/model/user.model.server.js">
+      <file leaf-file-name="projects.view.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assignment/public/views/home/projects.view.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="177" column="21" selection-start-line="177" selection-start-column="21" selection-end-line="177" selection-end-column="21" />
+            <state relative-caret-position="349">
+              <caret line="37" column="85" selection-start-line="37" selection-start-column="85" selection-end-line="37" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -180,7 +163,6 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/assignment/public/config.js" />
-        <option value="$PROJECT_DIR$/assignment/public/views/home/projects.view.html" />
         <option value="$PROJECT_DIR$/assignment/public/views/user/user.controller.client.js" />
         <option value="$PROJECT_DIR$/assignment/services/user.service.server.js" />
         <option value="$PROJECT_DIR$/assignment/services/widget.service.server.js" />
@@ -214,6 +196,7 @@
         <option value="$PROJECT_DIR$/project/public/app.js" />
         <option value="$PROJECT_DIR$/project/server/model/trail.schema.server.js" />
         <option value="$PROJECT_DIR$/project_server.js" />
+        <option value="$PROJECT_DIR$/assignment/public/views/home/projects.view.html" />
       </list>
     </option>
   </component>
@@ -228,9 +211,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="139" />
-    <option name="width" value="719" />
-    <option name="height" value="613" />
+    <option name="y" value="24" />
+    <option name="width" value="1301" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -326,6 +309,86 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="uploads" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assignment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assignment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assignment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nguyen-vy-webdev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assignment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="home" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -495,25 +558,25 @@
       <workItem from="1481236501753" duration="3406000" />
       <workItem from="1481239925060" duration="1585000" />
       <workItem from="1481254360778" duration="1446000" />
-      <workItem from="1481332126328" duration="92096000" />
+      <workItem from="1481332126328" duration="92309000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="527418000" />
+    <option name="totallyTimeSpent" value="527631000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="139" width="719" height="613" extended-state="0" />
-    <editor active="false" />
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5744089" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3174481" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32735425" sideWeight="0.5057648" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32735425" sideWeight="0.49423522" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3826607" sideWeight="0.56495005" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31226766" sideWeight="0.60799384" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25112107" sideWeight="0.60799384" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -568,14 +631,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assignment/public/views/home/projects.view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -959,6 +1014,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assignment/public/views/home/projects.view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="37" column="85" selection-start-line="37" selection-start-column="85" selection-end-line="37" selection-end-column="85" />
           <folding />
         </state>
       </provider>
