@@ -2,8 +2,8 @@
 # A site that allows you to search for hikes and find users interested in the same hikes as you!
 
 ## Find it on AWS EC2 [here!](http://ec2-54-209-14-215.compute-1.amazonaws.com:5000/#/project/home)
-## [GitHub Repo:](https://github.com/nguyenvyl/nguyen-vy-webdev)
-## [Personal Home Page:](http://ec2-54-209-14-215.compute-1.amazonaws.com:3000/#/home)
+## [GitHub Repo](https://github.com/nguyenvyl/nguyen-vy-webdev)
+## [Personal Home Page](http://ec2-54-209-14-215.compute-1.amazonaws.com:3000/#/home)
 
 ### Overview
 Hike Buddy was created to allow users to:
